@@ -1,0 +1,38 @@
+<template>
+  <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+    <v-img
+      src="data:image/jpeg;base64,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"
+    ></v-img>
+
+    <v-card-title>田崎真也</v-card-title>
+
+    <v-card-subtitle>たさき しんや</v-card-subtitle>
+
+    <v-divider></v-divider>
+
+    <v-card-text class="text--primary">
+      <div>
+        田崎 眞也は、日本のソムリエ、ワインタレント、料理評論家。有限会社サンティール代表取締役社長、有限会社インターソムリエ代表取締役社長、有限会社エルミタージュ代表取締役社長、日本ソムリエ協会会長。報道などでは新字体で田崎 真也と表記されることもある。
+        <a
+          href="#"
+        >ウィキペディア</a>
+      </div>
+    </v-card-text>
+  </v-card>
+</template>
+
+<script>
+export default {
+  //props: ["elements"],
+  data() {
+    return {};
+  },
+  methods: {
+    /*
+    messageLog(dat) {
+        this.$emit('parentMessage', dat)
+    }
+    */
+  }
+};
+</script>

@@ -1,0 +1,6 @@
+.DS_Store
+src/line_detect/data
+~*
+node_modules
+pm
+auto_ml
