@@ -7,13 +7,19 @@
     <template v-if="arr.length > 0">
       <v-card-title>「{{id}}」の発話（{{arr.length}}件）</v-card-title>
 
+      
+
       <v-card-text>
-        <ol>
+
+        <v-btn @click="flg = !flg"><template v-if="flg">ワードクラウドを隠す</template><template v-else>ワードクラウドを表示</template></v-btn>
+
+        <Wordcloud :text="text" v-show="flg"></Wordcloud>
+
+        <ol class="mt-5">
           <li v-for="(value, key) in arr" :key="key">{{value}}</li>
         </ol>
       </v-card-text>
-
-      <Wordcloud :text="text"></Wordcloud>
+      
     </template>
   </v-card>
 </template>
@@ -26,6 +32,7 @@ export default {
   },
   data() {
     return {
+      flg: false,
       arr: [],
       id: null,
       text: ""

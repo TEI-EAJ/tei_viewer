@@ -8,7 +8,14 @@
       <v-card-title>「{{id}}」の呼称（{{arr.length}}件）</v-card-title>
 
       <v-card-text>
-        <ol>
+        <v-btn @click="flg = !flg">
+          <template v-if="flg">グラフを隠す</template>
+          <template v-else>グラフを表示</template>
+        </v-btn>
+
+        <Sunburst height="300" :data="data" v-show="flg"></Sunburst>
+
+        <ol class="mt-5">
           <li v-for="(obj, key) in arr" :key="key">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
@@ -19,8 +26,6 @@
           </li>
         </ol>
       </v-card-text>
-
-      <Sunburst height="300" :data="data"></Sunburst>
     </template>
   </v-card>
 </template>
@@ -33,6 +38,7 @@ export default {
   },
   data() {
     return {
+      flg: false,
       arr: [],
       id: null,
       data: {}
