@@ -19,6 +19,7 @@
             :key="key"
             v-if="obj.elements"
             :elements="obj.elements"
+            :parent="obj.name"
           ></Hello>
         </span>
       </template>
@@ -29,6 +30,7 @@
             :key="key"
             v-if="obj.elements"
             :elements="obj.elements"
+            :parent="obj.name"
           ></Hello>
         </v-sheet>
       </template>
@@ -39,6 +41,7 @@
             :key="key"
             v-if="obj.elements"
             :elements="obj.elements"
+            :parent="obj.name"
           ></Hello>
         </h2>
       </template>
@@ -53,8 +56,8 @@
         <span
           :class="'tei-'+obj.name"
           :key="key"
-          :style="style(obj.name)"
-          @click="$emit('parentMessage', obj)"
+          :style="parent != 'person' && parent != 'respStmt' ? style(obj.name) : 'margin-right : 10px; margin-left : 10px;'"
+          @click="parent != 'person' && parent != 'respStmt' ? $emit('parentMessage', obj) : ''"
           :id="obj.id"
         >
           <Hello
@@ -62,6 +65,7 @@
             :key="key"
             v-if="obj.elements"
             :elements="obj.elements"
+            :parent="obj.name"
           ></Hello>
         </span>
       </template>
@@ -72,6 +76,7 @@
             :key="key"
             v-if="obj.elements"
             :elements="obj.elements"
+            :parent="obj.name"
           ></Hello>
         </span>
       </template>
@@ -84,7 +89,7 @@ import { uuid } from "vue-uuid";
 
 export default {
   name: "Hello",
-  props: ["elements"],
+  props: ["elements", "flg", "parent"],
   data() {
     return {};
   },

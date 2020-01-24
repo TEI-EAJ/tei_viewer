@@ -71,6 +71,7 @@ export default {
       this.builder.build(
         await function(err, tokenizer) {
           if (err) {
+            vm.status = "";
             throw err;
           } else {
             var token = tokenizer.tokenize(text);

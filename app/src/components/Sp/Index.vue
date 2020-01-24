@@ -9,8 +9,8 @@
 
       <v-card-text>
         <v-btn @click="flg = !flg">
-          <template v-if="flg">WCを隠す</template>
-          <template v-else>WCを表示</template>
+          <template v-if="flg">ワードクラウドを隠す</template>
+          <template v-else>ワードクラウドを表示</template>
         </v-btn>
 
         <v-card v-show="flg" outlined class="mt-2">
