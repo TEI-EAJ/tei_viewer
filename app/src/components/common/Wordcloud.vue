@@ -2,8 +2,8 @@
   <div class="mt-2">
     <template v-if="defaultWords.length == 0">
       <div>
-        <v-btn color="primary" class="mb-2" @click="conv()">実行</v-btn>
-        <p>{{status}}</p>
+        <v-btn color="primary" @click="conv()">実行</v-btn>
+        <p class="mt-5">{{status}}</p>
       </div>
     </template>
     <template v-else>
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       status: "",
-      builder: kuromoji.builder({ dicPath: "/dict" }),
+      builder: kuromoji.builder({ dicPath: "dict" }),
       myColors: ["#1f77b4", "#629fc9", "#94bedb", "#c9e0ef"],
       defaultWords: [],
       tmp: ""
@@ -50,20 +50,20 @@ export default {
     conv: async function() {
       let text = this.text;
       let size = text.length;
-      let max = 1000000;
-      let status = this.text.length;
+      let max = 100000;
+      let status = this.text.length.toLocaleString()+"文字";
 
       if (size > max) {
         text = text.substr(0, max);
         status =
           "文字が多いため、はじめの" +
-          max +
+          max.toLocaleString() +
           "文字（" +
-          size +
+          size.toLocaleString() +
           "文字中）";
       }
 
-      status = "のテキストを処理中。"
+      status += "のテキストを処理中。"
 
       this.status = status;
 
