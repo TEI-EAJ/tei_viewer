@@ -4,7 +4,9 @@
       <v-toolbar-title>ワードクラウド</v-toolbar-title>
     </v-toolbar>
 
-    <Wordcloud :text="text"></Wordcloud>
+    <v-card-text class="mt-5">
+      <Wordcloud :text="text"></Wordcloud>
+    </v-card-text>
   </v-card>
 </template>
 

@@ -1,26 +1,28 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" app :temporary="true">
-      <v-list>
-        <v-list-item
-          @click="dialog = !dialog; drawer = !drawer; components.c = value"
-          v-for="(value, key) in map"
-          :key="key"
-        >
-          <v-list-item-action>
-            <v-icon>mdi-information</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{key}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-app-bar>
-      <v-app-bar-nav-icon v-if="start" @click.stop="drawer = !drawer" />
       <v-toolbar-title>TEI Viewer</v-toolbar-title>
       <v-spacer></v-spacer>
+
+      <v-menu left bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item
+            @click="components.c = value; dialog = !dialog;"
+            v-for="(value, key) in map"
+            :key="key"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{key}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
       <v-btn icon href="./">
         <v-icon>mdi-home</v-icon>
@@ -138,7 +140,7 @@
     </div>
 
     <v-dialog v-model="dialog" width="80%">
-      <component v-if="e" :is="components.c" :xml="xml" :props="props"></component>
+      <component :is="components.c" :xml="xml" :props="props"></component>
     </v-dialog>
   </div>
 </template>
@@ -190,9 +192,9 @@ export default {
       c4: "Sp"
     },
     map: {
-      "人物の出現頻度": Graph,
-      "呼称割合の可視化": Pie,
-      "ワードクラウド": Wordcloud
+      人物の出現頻度: Graph,
+      呼称割合の可視化: Pie,
+      ワードクラウド: Wordcloud
     }
   }),
   mounted() {

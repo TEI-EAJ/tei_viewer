@@ -1,14 +1,21 @@
 <template>
-  <div>
-    <div class="pa-5">{{status}}</div>
-    <wordcloud
-      :data="defaultWords"
-      nameKey="name"
-      valueKey="value"
-      :color="myColors"
-      :showTooltip="true"
-      :wordClick="wordClickHandler"
-    ></wordcloud>
+  <div class="mt-2">
+    <template v-if="defaultWords.length == 0">
+      <div>
+        <v-btn color="primary" class="mb-2" @click="conv()">実行</v-btn>
+        <p>{{status}}</p>
+      </div>
+    </template>
+    <template v-else>
+      <wordcloud
+        :data="defaultWords"
+        nameKey="name"
+        valueKey="value"
+        :color="myColors"
+        :showTooltip="true"
+        :wordClick="wordClickHandler"
+      ></wordcloud>
+    </template>
   </div>
 </template>
 
@@ -28,37 +35,38 @@ export default {
       myColors: ["#1f77b4", "#629fc9", "#94bedb", "#c9e0ef"],
       defaultWords: [],
       tmp: ""
-      //text: ""
     };
   },
+
   watch: {
     text: function() {
-      this.conv();
+      this.defaultWords = [];
     }
-  },
-  mounted() {
-    if (!this.text) {
-      this.text = "テキストを入力してください。";
-    }
-    this.conv();
   },
   methods: {
     wordClickHandler(name, value, vm) {
       this.tmp = value + vm;
     },
     conv: async function() {
-      this.status = this.text.length + "文字のテキストを処理中。";
       let text = this.text;
       let size = text.length;
-      if (size > 10000) {
-        text = text.substr(0, 10000);
-        this.status =
-          "文字が多いため、はじめの10000文字（" +
+      let max = 1000000;
+      let status = this.text.length;
+
+      if (size > max) {
+        text = text.substr(0, max);
+        status =
+          "文字が多いため、はじめの" +
+          max +
+          "文字（" +
           size +
-          "文字中）のテキストを処理中。";
+          "文字中）";
       }
-      //console.log(text)
-      this.defaultWords = [];
+
+      status = "のテキストを処理中。"
+
+      this.status = status;
+
       var vm = this;
       this.builder.build(
         await function(err, tokenizer) {

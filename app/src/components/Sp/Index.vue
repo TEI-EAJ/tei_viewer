@@ -13,7 +13,11 @@
           <template v-else>WCを表示</template>
         </v-btn>
 
-        <Wordcloud :text="text" v-show="flg"></Wordcloud>
+        <v-card v-show="flg" outlined class="mt-2">
+          <v-card-text>
+            <Wordcloud :text="text"></Wordcloud>
+          </v-card-text>
+        </v-card>
 
         <ol class="mt-5">
           <li v-for="(value, key) in arr" :key="key">{{value}}</li>
@@ -111,7 +115,6 @@ export default {
           }
 
           sps = body.querySelectorAll("said");
-          //let arr = []
           for (let j = 0; j < sps.length; j++) {
             let sp = sps[j];
             if (
