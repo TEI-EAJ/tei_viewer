@@ -150,10 +150,11 @@ import Map from "../components/Map.vue";
 import Link from "../components/Link.vue";
 import MIMA from "../components/MIMA.vue";
 import Person from "../components/Person.vue";
-import Name from "../components/Name.vue";
-import Sp from "../components/Sp.vue";
+import Name from "../components/Name/Index.vue";
+import Sp from "../components/Sp/Index.vue";
 import Graph from "../components/Graph/Index.vue";
 import Pie from "../components/Pie/Index.vue";
+import Wordcloud from "../components/Wordcloud/Index.vue";
 
 var convert = require("xml-js");
 
@@ -167,7 +168,8 @@ export default {
     Name,
     Sp,
     Graph,
-    Pie
+    Pie,
+    Wordcloud
   },
   data: () => ({
     //config
@@ -188,8 +190,9 @@ export default {
       c4: "Sp"
     },
     map: {
-      人物の出現頻度: Graph,
-      呼称割合の可視化: Pie
+      "人物の出現頻度": Graph,
+      "呼称割合の可視化": Pie,
+      "ワードクラウド": Wordcloud
     }
   }),
   mounted() {
