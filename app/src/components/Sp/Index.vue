@@ -1,17 +1,17 @@
 <template>
   <v-card class="ma-2" style="overflow:auto; height:100%;">
-    <v-toolbar color="primary" dark>
+    <v-toolbar color="primary" dark flat>
       <v-toolbar-title>発話内容</v-toolbar-title>
     </v-toolbar>
 
     <template v-if="arr.length > 0">
       <v-card-title>「{{id}}」の発話（{{arr.length}}件）</v-card-title>
 
-      
-
       <v-card-text>
-
-        <v-btn @click="flg = !flg"><template v-if="flg">ワードクラウドを隠す</template><template v-else>ワードクラウドを表示</template></v-btn>
+        <v-btn @click="flg = !flg">
+          <template v-if="flg">WCを隠す</template>
+          <template v-else>WCを表示</template>
+        </v-btn>
 
         <Wordcloud :text="text" v-show="flg"></Wordcloud>
 
@@ -19,7 +19,6 @@
           <li v-for="(value, key) in arr" :key="key">{{value}}</li>
         </ol>
       </v-card-text>
-      
     </template>
   </v-card>
 </template>

@@ -1,17 +1,12 @@
 <template>
   <v-card style="overflow:auto; height:100%;">
-    <v-toolbar color="primary" dark>
+    <v-toolbar color="primary" dark flat>
       <v-toolbar-title>呼称割合の可視化</v-toolbar-title>
     </v-toolbar>
 
     <v-card>
       <v-card-text>
-        <sunburst
-          :data="data"
-          colorScheme="schemePastel1"
-          style="height : 600px"
-          class="mt-5"
-        >
+        <sunburst :data="data" colorScheme="schemePastel1" style="height : 600px" class="mt-5">
           <!-- Add behaviors -->
           <breadcrumbTrail
             slot="legend"
@@ -74,7 +69,7 @@ export default {
       this.arr = [];
       this.id = null;
 
-      let xml = this.xml
+      let xml = this.xml;
 
       let eles = ["persName", "rs"];
       let attrs = ["corresp", "ref"];

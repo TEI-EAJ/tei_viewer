@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-2" style="overflow:auto; height:100%;">
-    <v-toolbar color="primary" dark>
+    <v-toolbar color="primary" dark flat>
       <v-toolbar-title>呼称</v-toolbar-title>
     </v-toolbar>
 

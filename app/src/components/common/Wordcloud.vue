@@ -1,12 +1,15 @@
 <template>
-  <wordcloud
-    :data="defaultWords"
-    nameKey="name"
-    valueKey="value"
-    :color="myColors"
-    :showTooltip="true"
-    :wordClick="wordClickHandler"
-  ></wordcloud>
+  <div>
+    <div class="pa-5">{{status}}</div>
+    <wordcloud
+      :data="defaultWords"
+      nameKey="name"
+      valueKey="value"
+      :color="myColors"
+      :showTooltip="true"
+      :wordClick="wordClickHandler"
+    ></wordcloud>
+  </div>
 </template>
 
  <script>
@@ -20,6 +23,7 @@ export default {
   name: "Wordcloud",
   data() {
     return {
+      status: "",
       builder: kuromoji.builder({ dicPath: "/dict" }),
       myColors: ["#1f77b4", "#629fc9", "#94bedb", "#c9e0ef"],
       defaultWords: [],
@@ -43,7 +47,17 @@ export default {
       this.tmp = value + vm;
     },
     conv: async function() {
-      //console.log(this.text.length+"の文字列を処理開始。")
+      this.status = this.text.length + "文字のテキストを処理中。";
+      let text = this.text;
+      let size = text.length;
+      if (size > 10000) {
+        text = text.substr(0, 10000);
+        this.status =
+          "文字が多いため、はじめの10000文字（" +
+          size +
+          "文字中）のテキストを処理中。";
+      }
+      //console.log(text)
       this.defaultWords = [];
       var vm = this;
       this.builder.build(
@@ -51,7 +65,7 @@ export default {
           if (err) {
             throw err;
           } else {
-            var token = tokenizer.tokenize(vm.text);
+            var token = tokenizer.tokenize(text);
 
             let map = {};
             for (let i = 0; i < token.length; i++) {
@@ -76,6 +90,7 @@ export default {
               });
             }
             vm.defaultWords = defaultWords;
+            vm.status = "";
           }
         }
       );

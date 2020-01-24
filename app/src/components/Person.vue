@@ -1,6 +1,6 @@
 <template>
-  <v-card class="ma-2" style="overflow:auto; height:100%;">
-    <v-toolbar color="primary" dark>
+  <v-card class="ma-2">
+    <v-toolbar color="primary" dark flat>
       <v-toolbar-title>人物情報</v-toolbar-title>
     </v-toolbar>
 

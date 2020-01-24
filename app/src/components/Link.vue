@@ -1,10 +1,11 @@
 <template>
   <v-card class="ma-2">
-    <v-toolbar color="primary" dark>
+    <v-toolbar color="primary" dark flat>
       <v-toolbar-title>外部サイト</v-toolbar-title>
     </v-toolbar>
+    <template v-if="label">
     <v-list subheader>
-      <template v-if="label">
+      
         <v-subheader>「{{label}}」を調べる</v-subheader>
         <v-list-item
           v-for="item in items"
@@ -20,8 +21,9 @@
             <v-list-item-title v-text="item.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </template>
+      
     </v-list>
+    </template>
   </v-card>
 </template>
 
