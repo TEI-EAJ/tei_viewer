@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar>
-      <v-toolbar-title>TEI Viewer</v-toolbar-title>
+      <v-toolbar-title>TEI Level 4 Viewer</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-menu left bottom>
@@ -30,7 +30,7 @@
     </v-app-bar>
 
     <v-container class="my-5" v-show="!start">
-      <h2 class="mb-5">TEI Viewer</h2>
+      <h2 class="mb-5">TEI Level 4 Viewer</h2>
       <p>TEI/XMLファイルを選択してください。</p>
       <input type="file" id="files" @change="handleFileSelect" multiple />
 
