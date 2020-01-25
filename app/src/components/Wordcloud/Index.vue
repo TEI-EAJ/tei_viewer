@@ -1,6 +1,6 @@
 <template>
   <v-card style="overflow:auto; height:100%;">
-    <v-toolbar color="primary" dark flat>
+    <v-toolbar class="headline grey lighten-2" flat>
       <v-toolbar-title>ワードクラウド</v-toolbar-title>
     </v-toolbar>
 

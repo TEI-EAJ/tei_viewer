@@ -15,6 +15,25 @@
         :showTooltip="true"
         :wordClick="wordClickHandler"
       ></wordcloud>
+
+      <v-card outlined>
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          dense
+          :headers="headers"
+          :items="defaultWords"
+          :search="search"
+        ></v-data-table>
+      </v-card>
     </template>
   </div>
 </template>
@@ -34,7 +53,14 @@ export default {
       builder: kuromoji.builder({ dicPath: "dict" }),
       myColors: ["#1f77b4", "#629fc9", "#94bedb", "#c9e0ef"],
       defaultWords: [],
-      tmp: ""
+      tmp: "",
+
+      search: '',
+        headers: [
+          { text: '形態素', value: 'name' },
+          { text: '出現回数', value: 'value' }
+        ],
+        desserts: this.defaultWords
     };
   },
 
