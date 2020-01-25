@@ -45,6 +45,14 @@
           ></Hello>
         </h2>
       </template>
+      <template v-else-if="(obj.name == 'eaj:ruby') || (obj.attributes && obj.attributes.type == 'ruby')">
+        <ruby :key="key">
+          <Hello
+            :elements="obj.elements[0].elements"
+          ></Hello>
+          <rt>{{obj.elements[2].elements[0].text}}</rt>
+        </ruby>
+      </template>
       <template
         v-else-if="obj.name == 'persName' || 
         obj.name == 'placeName' || 

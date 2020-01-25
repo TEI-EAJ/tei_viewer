@@ -147,11 +147,11 @@
 
 <script>
 import axios from "axios";
-import Wiki from "../components/Wiki.vue";
-import Map from "../components/Map.vue";
-import Link from "../components/Link.vue";
-import MIMA from "../components/MIMA.vue";
-import Person from "../components/Person.vue";
+import Wiki from "../components/Wiki/Index.vue";
+import Map from "../components/Map/Index.vue";
+import Link from "../components/Link/Index.vue";
+import MIMA from "../components/MIMA/Index.vue";
+import Person from "../components/Person/Index.vue";
 import Name from "../components/Name/Index.vue";
 import Sp from "../components/Sp/Index.vue";
 import Graph from "../components/Graph/Index.vue";

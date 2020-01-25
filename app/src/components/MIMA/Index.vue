@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-2">
-    <v-toolbar color="primary" dark flat>
+    <v-toolbar class="headline grey lighten-2" flat>
       <v-toolbar-title>関連コンテンツ</v-toolbar-title>
     </v-toolbar>
     <v-list subheader>

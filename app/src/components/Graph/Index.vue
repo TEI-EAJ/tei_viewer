@@ -1,6 +1,6 @@
 <template>
   <v-card style="overflow:auto; height:100%;">
-    <v-toolbar color="primary" dark>
+    <v-toolbar class="headline grey lighten-2">
       <v-toolbar-title>人物の出現頻度</v-toolbar-title>
     </v-toolbar>
 
