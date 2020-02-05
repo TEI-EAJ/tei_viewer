@@ -39,7 +39,9 @@ export default {
     return {
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
       zoom: 8,
-      center: [35.693825, 139.703356]
+      center: [35.693825, 139.703356],
+      attribution: "Sample Organization",
+      markers: []
     };
   },
   methods: {

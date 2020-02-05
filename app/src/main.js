@@ -2,12 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify';
-import Hello from './components/Hello.vue'
+import MainText from './components/MainText/Index.vue'
 import { Splitpanes, Pane } from "splitpanes";
 
 Vue.config.productionTip = false
 
-Vue.component("Hello", Hello);
+Vue.component("MainText", MainText);
 Vue.component("Splitpanes", Splitpanes);
 Vue.component("Pane", Pane);
 

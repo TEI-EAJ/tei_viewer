@@ -35,11 +35,15 @@ export default {
   },
   methods: {
     init() {
-      let xml = this.xml
+      let xml = this.xml;
+
+      if (xml == null) {
+        return;
+      }
 
       let listPerson = xml.querySelector("listPerson");
-      if(!listPerson){
-        return
+      if (!listPerson) {
+        return;
       }
 
       let persons = listPerson.querySelectorAll("person");

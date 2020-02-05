@@ -6,14 +6,21 @@
 
       <v-menu left bottom>
         <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on" @click="dialog_config = !dialog_config;">
+            <v-icon>mdi-settings</v-icon>
+          </v-btn>
+        </template>
+      </v-menu>
+
+      <v-menu left bottom>
+        <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
-
         <v-list>
           <v-list-item
-            @click="components.c = value; dialog = !dialog;"
+            @click="dialog_component = value; dialog = !dialog;"
             v-for="(value, key) in map"
             :key="key"
           >
@@ -29,110 +36,125 @@
       </v-btn>
     </v-app-bar>
 
-    <v-container class="my-5" v-show="!start">
-      <h2 class="mb-5">TEI Level 4 Viewer</h2>
-      <p>TEI/XMLファイルを選択してください。</p>
-      <input type="file" id="files" @change="handleFileSelect" multiple />
+    <div v-show="!start">
+      <v-container class="my-5">
+        <h2 class="mb-5">TEI Level 4 Viewer</h2>
+        <p>TEI/XMLファイルを選択してください。</p>
+        <input type="file" id="files" @change="handleFileSelect" multiple />
 
-      <output id="list" class="mt-5"></output>
+        <output id="list" class="mt-5"></output>
+
+        <br />
+        <br />
+        <br />
+
+        <p class="mt-5">例１：走れメロス</p>
+
+        <v-btn
+          color="primary"
+          to="/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
+          class="mx-2 my-1"
+        >可視化例を見る</v-btn>
+        <v-btn
+          href="https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
+          target="_blank"
+          class="mx-2 my-1"
+        >サンプルデータを見る</v-btn>
+
+        <br />
+        <br />
+
+        <p class="mt-5">例２：芥川龍之介 三つの宝</p>
+
+        <v-btn
+          color="primary"
+          to="/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
+          class="mx-2 my-1"
+        >可視化例を見る</v-btn>
+        <v-btn
+          href="https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
+          target="_blank"
+          class="mx-2 my-1"
+        >サンプルデータを見る</v-btn>
+
+        <br />
+        <br />
+
+        <p class="mt-5">例３：芥川龍之介 二人小町</p>
+
+        <v-btn
+          color="primary"
+          to="/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
+          class="mx-2 my-1"
+        >可視化例を見る</v-btn>
+        <v-btn
+          href="https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
+          target="_blank"
+          class="mx-2 my-1"
+        >サンプルデータを見る</v-btn>
+
+        <br />
+        <br />
+
+        <p class="mt-5">
+          例４：Emily Dickinson ‘Faith is a fine invention’ from
+          <a
+            href="http://v-machine.org/samples/"
+          >Versioning Machine</a>
+        </p>
+
+        <v-btn
+          color="primary"
+          to="/?u=https://tei-eaj.github.io/koui/data/faith.xml"
+          class="mx-2 my-1"
+        >可視化例を見る</v-btn>
+        <v-btn
+          href="http://v-machine.org/samples/faith.xml"
+          target="_blank"
+          class="mx-2 my-1"
+        >サンプルデータを見る</v-btn>
+      </v-container>
 
       <br />
-      <br />
-      <br />
 
-      <p class="mt-5">例１：走れメロス</p>
+      <v-footer :dark="true" :inset="true" class="mt-5">
+        <v-container>
+          <p class="text-center my-5">TEI-C東アジア/日本語分科会</p>
+        </v-container>
+      </v-footer>
+    </div>
 
-      <v-btn
-        color="primary"
-        to="/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
-        class="mx-2 my-1"
-      >可視化例を見る</v-btn>
-      <v-btn
-        href="https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
-        target="_blank"
-        class="mx-2 my-1"
-      >サンプルデータを見る</v-btn>
-
-      <br />
-      <br />
-
-      <p class="mt-5">例２：芥川龍之介 三つの宝</p>
-
-      <v-btn
-        color="primary"
-        to="/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
-        class="mx-2 my-1"
-      >可視化例を見る</v-btn>
-      <v-btn
-        href="https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
-        target="_blank"
-        class="mx-2 my-1"
-      >サンプルデータを見る</v-btn>
-
-      <br />
-      <br />
-
-      <p class="mt-5">例３：芥川龍之介 二人小町</p>
-
-      <v-btn
-        color="primary"
-        to="/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
-        class="mx-2 my-1"
-      >可視化例を見る</v-btn>
-      <v-btn
-        href="https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
-        target="_blank"
-        class="mx-2 my-1"
-      >サンプルデータを見る</v-btn>
-
-      <br />
-      <br />
-
-      <p class="mt-5">
-        例４：Emily Dickinson ‘Faith is a fine invention’ from
-        <a
-          href="http://v-machine.org/samples/"
-        >Versioning Machine</a>
-      </p>
-
-      <v-btn
-        color="primary"
-        to="/?u=https://tei-eaj.github.io/koui/data/faith.xml"
-        class="mx-2 my-1"
-      >可視化例を見る</v-btn>
-      <v-btn
-        href="http://v-machine.org/samples/faith.xml"
-        target="_blank"
-        class="mx-2 my-1"
-      >サンプルデータを見る</v-btn>
-    </v-container>
-
-    <div style="height : 800px" v-if="start">
-      <splitpanes class="default-theme" size="50">
-        <pane size="20">
-          <splitpanes class="default-theme" horizontal="horizontal" size="50">
-            <pane size="50">
-              <component :is="components.c1" :xml="xml" :props="props"></component>
+    <div :style="'height : '+height+'px'" v-if="start">
+      <splitpanes class="default-theme" @resize="resize1($event)">
+        <pane v-for="(obj, key) in area" :key="key" :size="obj.w">
+          <splitpanes
+            class="default-theme"
+            horizontal="horizontal"
+            @resize="obj.h = Math.ceil($event[0].size)"
+          >
+            <pane :size="obj.h">
+              <template v-if="obj.c1 == 'MainText'">
+                <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+                  <v-card-text class="text--primary">
+                    <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
+                  </v-card-text>
+                </v-card>
+              </template>
+              <template v-else>
+                <component :is="obj.c1" :xml="xml" :props="props"></component>
+              </template>
             </pane>
-            <pane size="50">
-              <component :is="components.c2" :xml="xml" :props="props"></component>
-            </pane>
-          </splitpanes>
-        </pane>
-        <pane size="60">
-          <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
-            <v-card-text class="text--primary">
-              <Hello v-on:parentMessage="messageLog" :elements="data.elements"></Hello>
-            </v-card-text>
-          </v-card>
-        </pane>
-        <pane size="20">
-          <splitpanes class="default-theme" horizontal="horizontal" size="50">
-            <pane size="50">
-              <component :is="components.c3" :xml="xml" :props="props"></component>
-            </pane>
-            <pane size="50">
-              <component :is="components.c4" :xml="xml" :props="props"></component>
+            <pane :size="100-obj.h">
+              <template v-if="obj.c2 == 'MainText'">
+                <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+                  <v-card-text class="text--primary">
+                    <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
+                  </v-card-text>
+                </v-card>
+              </template>
+              <template v-else>
+                <component :is="obj.c2" :xml="xml" :props="props"></component>
+              </template>
             </pane>
           </splitpanes>
         </pane>
@@ -140,7 +162,28 @@
     </div>
 
     <v-dialog v-model="dialog" width="80%">
-      <component :is="components.c" :xml="xml" :props="props"></component>
+      <component :is="dialog_component" :xml="xml" :props="props"></component>
+    </v-dialog>
+
+    <v-dialog v-model="dialog_config" width="80%">
+      <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+        <v-card-text class="text--primary">
+          <br />
+          <h1>表示設定</h1>
+          <br />
+          <div v-for="(obj, key) in area" :key="key">
+            <v-select v-model="obj.c1" :items="items" :label="(key + 1)+'-1'"></v-select>
+
+            <br />
+
+            <v-select v-model="obj.c2" :items="items" :label="(key + 1)+'-2'"></v-select>
+
+            <br />
+          </div>
+
+          <v-btn @click="conf(); dialog_config = !dialog_config;" color="primary">レイアウトの初期化</v-btn>
+        </v-card-text>
+      </v-card>
     </v-dialog>
   </div>
 </template>
@@ -157,6 +200,8 @@ import Sp from "../components/Sp/Index.vue";
 import Graph from "../components/Graph/Index.vue";
 import Pie from "../components/Pie/Index.vue";
 import Wordcloud from "../components/Wordcloud/Index.vue";
+import HelloWorld from "../components/HelloWorld/Index.vue";
+import MainText from "../components/MainText/Index.vue";
 
 var convert = require("xml-js");
 
@@ -171,9 +216,25 @@ export default {
     Sp,
     Graph,
     Pie,
-    Wordcloud
+    Wordcloud,
+    HelloWorld,
+    MainText
   },
   data: () => ({
+    area: [
+      { w: 25, h: 50, c1: "Person", c2: "Link" },
+      { w: 50, h: 100, c1: "MainText", c2: null },
+      { w: 25, h: 50, c1: "Name", c2: "Sp" }
+    ],
+
+    dialog_component: null,
+
+    u: null,
+    dialog_config: false,
+
+    width: window.innerWidth,
+    height: window.innerHeight,
+
     //config
     start: false,
     dialog: false,
@@ -184,13 +245,52 @@ export default {
     xml: null,
     e: null,
 
-    //components
-    components: {
-      c1: "Person",
-      c2: "Link",
-      c3: "Name",
-      c4: "Sp"
-    },
+    items: [
+      {
+        value: null,
+        text: ""
+      },
+      {
+        value: "Person",
+        text: "人物"
+      },
+      {
+        value: "Map",
+        text: "地図"
+      },
+      {
+        value: "MainText",
+        text: "本文"
+      },
+      {
+        value: "Link",
+        text: "外部サイト"
+      },
+      {
+        value: "Wiki",
+        text: "Wikipedia"
+      },
+      {
+        value: "Name",
+        text: "呼称"
+      },
+      {
+        value: "HelloWorld",
+        text: "HelloWorld"
+      },
+      {
+        value: "Sp",
+        text: "発話内容"
+      },
+      {
+        value: "Graph",
+        text: "人物の出現頻度"
+      },
+      {
+        value: "Pie",
+        text: "呼称割合の可視化"
+      }
+    ],
     map: {
       人物の出現頻度: Graph,
       呼称割合の可視化: Pie,
@@ -198,17 +298,40 @@ export default {
     }
   }),
   mounted() {
+    window.addEventListener("resize", this.handleResize);
+
+    if (this.$route.query.area) {
+      this.area = JSON.parse(this.$route.query.area);
+    }
+
     this.init();
   },
   watch: {
-    $route() {
-      this.$router.go({
-        path: this.$router.currentRoute.path,
-        force: true
-      });
+    //URLが変わった場合に更新
+    $route(val, oldVal) {
+      if (val.query.u != oldVal.query.u && val.query.u != null) {
+        this.$router.go({
+          path: this.$router.currentRoute.path,
+          force: true
+        });
+      }
     },
     xml() {
       this.handleXml();
+    },
+    area: {
+      handler: function() {
+        let param = {
+          u: this.u,
+          area: JSON.stringify(this.area)
+        };
+        this.$router.replace(
+          { path: "/", query: param },
+          () => {},
+          () => {}
+        );
+      },
+      deep: true
     }
   },
   computed: {
@@ -219,6 +342,53 @@ export default {
     }
   },
   methods: {
+    conf: function() {
+      let area = this.area;
+      let cell_exist_flgs = [];
+      for (let i = 0; i < area.length; i++) {
+        let obj = area[i];
+        let c1 = obj.c1;
+        let c2 = obj.c2;
+
+        let cell_exist_flg = 1;
+
+        if (c1 != null && c2 == null) {
+          obj.h = 100;
+        } else if (c1 == null && c2 != null) {
+          obj.h = 0;
+        } else if (c1 == null && c2 == null) {
+          cell_exist_flg = 0;
+        } else {
+          obj.h = 50;
+        }
+        cell_exist_flgs.push(cell_exist_flg);
+      }
+
+      var sum = function(arr) {
+        return arr.reduce(function(prev, current) {
+          return prev + current;
+        });
+      };
+
+      let cell_size = sum(cell_exist_flgs);
+
+      for (let i = 0; i < area.length; i++) {
+        let w = cell_exist_flgs[i] == 1 ? Math.ceil(100 / cell_size) : 0;
+        area[i].w = w;
+      }
+    },
+    resize1: function(event) {
+      let area = this.area;
+      for (let i = 0; i < area.length; i++) {
+        let obj = area[i];
+        obj.w = Math.ceil(event[i].size);
+      }
+    },
+    handleResize: function() {
+      // resizeのたびにこいつが発火するので、ここでやりたいことをやる
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+    },
     handleFileSelect(evt) {
       var files = evt.target.files; // FileList object
 
@@ -246,12 +416,14 @@ export default {
     },
     init() {
       let u = this.$route.query.u == null ? null : this.$route.query.u; //"01_with_wit.xml"
+      this.u = u;
 
       if (!u) {
         this.start = false;
         return;
       }
 
+      /*
       if (u.indexOf("bbp") != -1) {
         this.components = {
           c1: "Wiki",
@@ -261,6 +433,7 @@ export default {
           c: "Graph"
         };
       }
+      */
 
       axios
         .get(u, {
@@ -278,168 +451,14 @@ export default {
     messageLog(message) {
       this.e = message;
     },
-    init2() {
-      let u = this.$route.query.u == null ? "test3.xml" : this.$route.query.u; //"01_with_wit.xml"
-      this.exec2main(u);
-
-      let param = Object.assign({}, this.$route.query);
-      let class_arr = param.class ? param.class.split(",") : ["Q282"];
-
-      class SPARQLQueryDispatcher {
-        constructor(endpoint) {
-          this.endpoint = endpoint;
-        }
-
-        query(sparqlQuery) {
-          const fullUrl =
-            this.endpoint + "?query=" + encodeURIComponent(sparqlQuery);
-          const headers = { Accept: "application/sparql-results+json" };
-
-          return fetch(fullUrl, { headers }).then(body => body.json());
-        }
+    size(a, b) {
+      if (a != null && b != null) {
+        return 50;
+      } else if (a != null && b == null) {
+        return 100;
+      } else {
+        return 0;
       }
-
-      const endpointUrl = "https://query.wikidata.org/sparql";
-
-      let aaa = "";
-      for (let i = 0; i < class_arr.length; i++) {
-        let class_value = class_arr[i];
-        aaa +=
-          `{  ?item wdt:P31 wd:` +
-          class_value +
-          `;
-        rdfs:label ?label . }`;
-        if (i != class_arr.length - 1) {
-          aaa += " UNION ";
-        }
-      }
-
-      const sparqlQuery =
-        `#ネコ
-      SELECT DISTINCT *
-      WHERE 
-      {
-  ` +
-        aaa +
-        `
-    filter(lang(?label) = "en")
-    optional { ?item schema:description ?description . filter(lang(?description) = "en")}
-    optional { ?item wdt:P18 ?image }
-    optional { ?item wdt:P571 ?inception }
-    optional { ?item wdt:P495 ?country . ?country rdfs:label ?country_label . filter(lang(?country_label) = "en")}
-    optional { ?item wdt:P176 ?manufacturer . ?manufacturer  rdfs:label ?manufacturer_label . filter(lang(?manufacturer_label) = "en") }
-  }`;
-
-      const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-      queryDispatcher.query(sparqlQuery).then(response => {
-        let results = response.results.bindings;
-
-        let index = {};
-        for (let i = 0; i < results.length; i++) {
-          let obj = results[i];
-          for (let key in obj) {
-            let value = obj[key].value;
-
-            if (key == "inception") {
-              value = value.split("-")[0];
-            }
-
-            if (!index[key]) {
-              index[key] = {};
-            }
-            if (!index[key][value]) {
-              index[key][value] = 0;
-            }
-            index[key][value] += 1;
-          }
-        }
-
-        let aggs = {};
-
-        let op = [
-          {
-            label: "Inception",
-            field: "inception"
-          },
-          {
-            label: "Country",
-            field: "country_label"
-          },
-          {
-            label: "Manufacturer",
-            field: "manufacturer_label"
-          }
-        ];
-
-        let query_aggs = {};
-
-        for (let i = 0; i < op.length; i++) {
-          let obj = op[i];
-          query_aggs[obj.label] = {
-            terms: {
-              field: obj.field,
-              order: {
-                _count: "desc"
-              },
-              size: 20
-            }
-          };
-        }
-
-        for (let label in query_aggs) {
-          let obj = query_aggs[label].terms;
-          let size = Number(obj.size);
-          let field = obj.field.replace(".keyword", "");
-          let map = index[field];
-
-          let map_new = {};
-          for (let value in map) {
-            map_new[value] = map[value];
-          }
-
-          //オブジェクトに変換
-          let arr = Object.keys(map_new).map(e => ({
-            key: e,
-            value: map_new[e]
-          }));
-
-          //値でそーと
-          arr.sort(function(a, b) {
-            if (a.value < b.value) return 1;
-            if (a.value > b.value) return -1;
-            return 0;
-          });
-
-          if (size > arr.length) {
-            size = arr.length;
-          }
-
-          let buckets = [];
-          for (let i = 0; i < size; i++) {
-            buckets.push({
-              key: arr[i].key,
-              doc_count: arr[i].value
-            });
-          }
-
-          aggs[field] = {
-            buckets: buckets
-          };
-        }
-
-        let result = {
-          aggregations: aggs,
-          hits: {
-            hits: results,
-            total: {
-              relation: "gte",
-              value: results.length
-            }
-          }
-        };
-
-        this.results = result;
-      });
     }
   }
 };
