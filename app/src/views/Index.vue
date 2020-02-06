@@ -263,7 +263,7 @@ export default {
   },
   data: () => ({
     area: [
-      { w: 25, h: 50, c1: "Person", c2: "Link" },
+      { w: 25, h: 50, c1: "Person", c2: "Place" },
       { w: 50, h: 100, c1: "MainText", c2: null },
       { w: 25, h: 50, c1: "Name", c2: "Sp" }
     ],
