@@ -4,36 +4,46 @@
       <v-toolbar-title>TEI Level 4 Viewer</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-menu left bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on" @click="dialog_config = !dialog_config;">
-            <v-icon>mdi-settings</v-icon>
-          </v-btn>
-        </template>
-      </v-menu>
+      <template v-if="start">
+        <v-menu left bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on" @click="dialog_information = !dialog_information;">
+              <v-icon>mdi-information</v-icon>
+            </v-btn>
+          </template>
+        </v-menu>
 
-      <v-menu left bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
-            @click="dialog_component = value; dialog = !dialog;"
-            v-for="(value, key) in map"
-            :key="key"
-          >
-            <v-list-item-content>
-              <v-list-item-title>{{key}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+        <v-menu left bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on" @click="dialog_config = !dialog_config;">
+              <v-icon>mdi-settings</v-icon>
+            </v-btn>
+          </template>
+        </v-menu>
 
-      <v-btn icon href="./">
-        <v-icon>mdi-home</v-icon>
-      </v-btn>
+        <v-menu left bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              @click="dialog_component = value; dialog = !dialog;"
+              v-for="(value, key) in map"
+              :key="key"
+            >
+              <v-list-item-content>
+                <v-list-item-title>{{key}}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <v-btn icon href="./">
+          <v-icon>mdi-home</v-icon>
+        </v-btn>
+      </template>
     </v-app-bar>
 
     <div v-show="!start">
@@ -161,6 +171,28 @@
       </splitpanes>
     </div>
 
+    <v-dialog v-model="dialog_information" width="80%">
+      <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+        <v-card-text class="text--primary">
+          <h1 class="my-5">使用データ</h1>
+          <a :href="u" v-if="u" target="_blank">{{u}}</a>
+          <hr class="my-5" />
+          <h1 class="my-5">設定情報</h1>
+          <v-sheet class="my-5 pa-5" color="grey lighten-3">{{area}}</v-sheet>
+          <v-btn class="mr-2 mb-5" color="primary" @click="export_myjson">設定情報をエクスポート</v-btn>
+          <p v-if="link1">
+            設定ファイルへのリンク:
+            <a :href="link1" target="_blank">{{link1}}</a>
+          </p>
+          <p v-if="link2">
+            Viewerへのリンク:
+            <a :href="link2" target="_blank">{{link2}}</a>
+          </p>
+          <hr class="my-5" />
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
     <v-dialog v-model="dialog" width="80%">
       <component :is="dialog_component" :xml="xml" :props="props"></component>
     </v-dialog>
@@ -180,8 +212,8 @@
 
             <br />
           </div>
-
-          <v-btn @click="conf(); dialog_config = !dialog_config;" color="primary">レイアウトの初期化</v-btn>
+          <v-btn class="mr-2" @click="dialog_config = !dialog_config;" color="primary">閉じる</v-btn>
+          <v-btn @click="conf(); dialog_config = !dialog_config;" color="primary">レイアウトを調整して閉じる</v-btn>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -194,7 +226,10 @@ import Wiki from "../components/Wiki/Index.vue";
 import Map from "../components/Map/Index.vue";
 import Link from "../components/Link/Index.vue";
 import MIMA from "../components/MIMA/Index.vue";
+
 import Person from "../components/Person/Index.vue";
+import Place from "../components/Place/Index.vue";
+
 import Name from "../components/Name/Index.vue";
 import Sp from "../components/Sp/Index.vue";
 import Graph from "../components/Graph/Index.vue";
@@ -211,7 +246,10 @@ export default {
     Wiki,
     Link,
     MIMA,
+
     Person,
+    Place,
+
     Name,
     Sp,
     Graph,
@@ -230,7 +268,12 @@ export default {
     dialog_component: null,
 
     u: null,
+    config: null,
     dialog_config: false,
+    dialog_information: false,
+
+    link1: null,
+    link2: null,
 
     width: window.innerWidth,
     height: window.innerHeight,
@@ -250,10 +293,16 @@ export default {
         value: null,
         text: ""
       },
+
       {
         value: "Person",
         text: "人物"
       },
+      {
+        value: "Place",
+        text: "場所"
+      },
+
       {
         value: "Map",
         text: "地図"
@@ -284,15 +333,19 @@ export default {
       },
       {
         value: "Graph",
-        text: "人物の出現頻度"
+        text: "固有表現の出現頻度"
       },
       {
         value: "Pie",
         text: "呼称割合の可視化"
+      },
+      {
+        value: "MIMA",
+        text: "関連コンテンツ"
       }
     ],
     map: {
-      人物の出現頻度: Graph,
+      固有表現の出現頻度: Graph,
       呼称割合の可視化: Pie,
       ワードクラウド: Wordcloud
     }
@@ -300,8 +353,19 @@ export default {
   mounted() {
     window.addEventListener("resize", this.handleResize);
 
+    //areaが優先
     if (this.$route.query.area) {
       this.area = JSON.parse(this.$route.query.area);
+    } else if (this.$route.query.config) {
+      let config = this.$route.query.config;
+      this.config = config;
+      axios
+        .get(config, {
+          //responseType: "document"
+        })
+        .then(response => {
+          this.area = response.data;
+        });
     }
 
     this.init();
@@ -319,12 +383,18 @@ export default {
     xml() {
       this.handleXml();
     },
+    config() {
+      this.handleXml();
+    },
     area: {
       handler: function() {
         let param = {
           u: this.u,
           area: JSON.stringify(this.area)
         };
+        if (this.config) {
+          param.config = this.config;
+        }
         this.$router.replace(
           { path: "/", query: param },
           () => {},
@@ -342,6 +412,29 @@ export default {
     }
   },
   methods: {
+    export_myjson() {
+      axios.post("https://api.myjson.com/bins", this.area).then(response => {
+        //window.open(response.data.uri, '_blank');
+        this.link1 = response.data.uri;
+        this.link2 =
+          "https://tei-eaj.github.io/tei_viewer/app/#/?u=" +
+          this.u +
+          "&config=" +
+          this.link1;
+      });
+      /*
+      $.ajax({
+        url: ,
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result, textStatus, jqXHR) {
+          uri = result.uri
+        }
+      })
+      */
+    },
     conf: function() {
       let area = this.area;
       let cell_exist_flgs = [];

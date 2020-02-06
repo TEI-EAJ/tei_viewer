@@ -38,6 +38,20 @@
                <title>新ハムレット</title>
                <author>太宰治</author>
             </bibl>
+            <listPlace>
+               <place xml:id="ウイッタンバーグ">
+                  <placeName corresp="#ウイッタンバーグ">ウイッタンバーグ</placeName>
+                  <desc></desc>
+               </place>
+               <place xml:id="デンマーク">
+                  <placeName corresp="#デンマーク">デンマーク</placeName>
+                  <desc></desc>
+               </place>
+               <place xml:id="エルシノア">
+                  <placeName corresp="#エルシノア">エルシノア</placeName>
+                  <desc>デンマークの首府</desc>
+               </place>
+            </listPlace>
          </sourceDesc>
       </fileDesc>
    </teiHeader>
@@ -567,15 +581,15 @@
             
             <stage>ハムレット。ホレーショー。</stage>
             
-            <sp who="#ハムレット"><speaker>ハム</speaker><p>しばらくだったな。よく来てくれたね。どうだい、<placeName>ウイッタンバーグ</placeName>は。どんな具合だい。みな相変らずかね。</p></sp>
+            <sp who="#ハムレット"><speaker>ハム</speaker><p>しばらくだったな。よく来てくれたね。どうだい、<placeName corresp="#ウイッタンバーグ">ウイッタンバーグ</placeName>は。どんな具合だい。みな相変らずかね。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p>寒いですねえ、<placeName>こちら</placeName>は。<span type="ruby"><span type="rb">磯</span><span type="rp">（</span><span type="rt"
                >いそ</span><span type="rp">）</span></span>の香がしますね。海から、まっすぐに風が吹きつけて来るのだから、かなわない。<placeName>こちら</placeName>は、毎晩こんなに寒いのですか？</p></sp>
-            <sp who="#ハムレット"><speaker>ハム</speaker><p>いや、今夜はこれでも暖いほうだよ。一時は、寒かったがねえ。これからは暖くなる一方だ。もう、<placeName>デンマーク</placeName>も、やがて春さ。ところで、どうだね、みな元気かね。</p></sp>
+            <sp who="#ハムレット"><speaker>ハム</speaker><p>いや、今夜はこれでも暖いほうだよ。一時は、寒かったがねえ。これからは暖くなる一方だ。もう、<placeName corresp="#デンマーク">デンマーク</placeName>も、やがて春さ。ところで、どうだね、みな元気かね。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p><persName ref="ハムレット">王子さま。</persName><persName ref="ホレイショー">僕たち</persName>の事より、<persName ref="ハムレット">御自身</persName>はいかがです。</p></sp>
             <sp who="#ハムレット"><speaker>ハム</speaker><p>へんな言いかたをするね。何か、<persName ref="#ハムレット">僕</persName>に<span type="ruby"><span type="rb">就</span><span type="rp">（</span><span type="rt"
-               >つ</span><span type="rp">）</span></span>いて、悪い噂でも立っているのかね。<placeName>ウイッタンバーグ</placeName>は、口がうるさいからなあ。ホレーショー。<persName ref="#ホレーショー">君</persName>は、へんだよ。何だか、よそよそしいね。</p></sp>
+               >つ</span><span type="rp">）</span></span>いて、悪い噂でも立っているのかね。<placeName corresp="#ウイッタンバーグ">ウイッタンバーグ</placeName>は、口がうるさいからなあ。ホレーショー。<persName ref="#ホレーショー">君</persName>は、へんだよ。何だか、よそよそしいね。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p>いいえ、決してへんな事はありません。本当に、<persName ref="#ハムレット">王子さま</persName>、<persName ref="#ハムレット">あんた</persName>は大丈夫なんですか？　ああ、寒い。</p></sp>
-            <sp who="#ハムレット"><speaker>ハム</speaker><p><persName ref="#ハムレット">王子さま</persName>、か。そんな筈じゃ無かったがねえ。おい、以前のようにハムレットと呼んでくれ。すっかり他人になってしまったね。<persName ref="#ホレーショー">君</persName>は、いったい、何しに<placeName>エルシノア</placeName>へ来たんだ。</p></sp>
+            <sp who="#ハムレット"><speaker>ハム</speaker><p><persName ref="#ハムレット">王子さま</persName>、か。そんな筈じゃ無かったがねえ。おい、以前のようにハムレットと呼んでくれ。すっかり他人になってしまったね。<persName ref="#ホレーショー">君</persName>は、いったい、何しに<placeName corresp="#エルシノア">エルシノア</placeName>へ来たんだ。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p>ごめん、ごめん。相変らずのハムレットさまですね。すぐ怒る。案外に、お元気だ。大丈夫のようですね。</p></sp>
             <sp who="#ハムレット"><speaker>ハム</speaker><p>いやな言いかたをするなあ。何か悪い噂を聞いて来たのに違いない。なんだい？　どんな噂だい、言ってごらん。<persName ref="#クローヂヤス">叔父さん</persName>が<persName ref="#ホレーショー">君</persName>に、要らない事を言ってやったんだろう。きっとそうだ。ちっとも知りゃしない癖に、要らない事ばかり言いやがる。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p>いいえ、<persName ref="#クローヂヤス">王さま</persName>のお手紙は、情のこもったものでした。<persName ref="#ハムレット">王子</persName>が退屈しているから、話相手になりにやって来てくれ、という<span type="ruby"><span type="rb">勿体</span><span type="rp">（</span><span type="rt"
@@ -583,13 +597,13 @@
             <sp who="#ハムレット"><speaker>ハム</speaker><p><span type="ruby"><span type="rb">嘘</span><span type="rp">（</span><span type="rt"
                >うそ</span><span type="rp">）</span></span>をつけ。何か<span type="ruby"><span type="rb">他</span><span type="rp">（</span><span type="rt"
                   >ほか</span><span type="rp">）</span></span>の事も、その手紙に書いてあったに違いない。<persName ref="#ホレーショー">君</persName>だけは、嘘をつかない男だと思っていたがねえ。</p></sp>
-            <sp who="#ホレーショー"><speaker>ホレ</speaker><p>ハムレットさま。ホレーショーは昔ながらの、<persName ref="#ハムレット">あなた</persName>の親友です。いい加減の事は申しません。それでは、全部、<persName ref="#ホレーショー">僕</persName>が<placeName>ウイッタンバーグ</placeName>で耳にした事を、そのまま申し上げましょう。どうも、<placeName>ここ</placeName>は寒いですねえ。部屋へ帰りましょう。どうして<persName ref="#ホレーショー">僕</persName>を、こんなところへ引っぱり出して来たのです。顔を見るなり、ものも言わず、こんな寒い真暗なところへ連れて来て、やあ、しばらくだね、とおっしゃるのでは<persName ref="#ホレーショー">僕</persName>だって疑ってみたくなりますよ。</p></sp>
+            <sp who="#ホレーショー"><speaker>ホレ</speaker><p>ハムレットさま。ホレーショーは昔ながらの、<persName ref="#ハムレット">あなた</persName>の親友です。いい加減の事は申しません。それでは、全部、<persName ref="#ホレーショー">僕</persName>が<placeName corresp="#ウイッタンバーグ">ウイッタンバーグ</placeName>で耳にした事を、そのまま申し上げましょう。どうも、<placeName>ここ</placeName>は寒いですねえ。部屋へ帰りましょう。どうして<persName ref="#ホレーショー">僕</persName>を、こんなところへ引っぱり出して来たのです。顔を見るなり、ものも言わず、こんな寒い真暗なところへ連れて来て、やあ、しばらくだね、とおっしゃるのでは<persName ref="#ホレーショー">僕</persName>だって疑ってみたくなりますよ。</p></sp>
             <sp who="#ハムレット"><speaker>ハム</speaker><p>何を疑うのだ。そうか。だいたい、わかったような気がする。でも、それは、驚いたなあ。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p>おわかりになりましたか？　とにかく<placeName>お部屋</placeName>へ帰りましょう。<persName ref="#ホレーショー">僕</persName>は、ジャケツを着て来なかったので。</p></sp>
             <sp who="#ハムレット"><speaker>ハム</speaker><p>いや、<placeName>ここ</placeName>で話してくれ。<persName ref="#ハムレット">僕</persName>もそれに就いて<persName ref="#ホレーショー">君</persName>に、大いに聞いてもらいたい事があるんだ。山ほどあるんだ。他の人に聞かれちゃまずいんだ。ここなら大丈夫だ。寒いだろうけれど、我慢してくれ。どうも人間は、秘密を持つようになると、壁に耳が本当にあるような気がして来る。<persName ref="#ハムレット">僕</persName>も、このごろは少し疑い深くなったよ。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p>お察し<span type="ruby"><span type="rb">致</span><span type="rp">（</span><span type="rt"
                >いた</span><span type="rp">）</span></span>します。このたびは、お嘆きも深かった事と存じます。<persName ref="#先王">故王</persName>には、<persName ref="#ホレーショー">僕</persName>も両三度お目にかかった事がございましたけれど、――</p></sp>
-            <sp who="#ハムレット"><speaker>ハム</speaker><p>それどころじゃないんだ。嘆きがめらめら燃え出したよ。まあ、とにかく<persName ref="#ホレーショー">君</persName>が<placeName>ウイッタンバーグ</placeName>で聞いて来たという事を、まず、話してみないか。寒かったら、ほら、<persName ref="#ハムレット">僕</persName>の<span type="ruby"><span type="rb">外套</span><span type="rp">（</span><span type="rt"
+            <sp who="#ハムレット"><speaker>ハム</speaker><p>それどころじゃないんだ。嘆きがめらめら燃え出したよ。まあ、とにかく<persName ref="#ホレーショー">君</persName>が<placeName corresp="#ウイッタンバーグ">ウイッタンバーグ</placeName>で聞いて来たという事を、まず、話してみないか。寒かったら、ほら、<persName ref="#ハムレット">僕</persName>の<span type="ruby"><span type="rb">外套</span><span type="rp">（</span><span type="rt"
                >がいとう</span><span type="rp">）</span></span>をあげるよ。文明国に、あんまり永く留学していると皮膚も上品になるようだね。</p></sp>
             <sp who="#ホレーショー"><speaker>ホレ</speaker><p>おそれいります。ジャケツを着て来なかったもので、どうもいけません。では外套を、遠慮なく拝借いたします。はあ、もう大丈夫です。だいぶ暖かになりました。ありがとう存じます。</p></sp>
             <sp who="#ハムレット"><speaker>ハム</speaker><p>早く話してみないかね。<persName ref="#ホレーショー">君</persName>はデンマークへ寒がりに来たみたいだ。</p></sp>
@@ -1033,7 +1047,7 @@
             </sp>
             <sp who="#ハムレット">
                <speaker>ハム</speaker>
-               <p>辞表を？　なぜです。何か、問題が起ったのですか？　軽率ですね。<persName ref="#ポローニヤス">あなた</persName>は、いまの<placeName>エルシノア王城</placeName>に無くてはかなわぬ人です。</p>
+               <p>辞表を？　なぜです。何か、問題が起ったのですか？　軽率ですね。<persName ref="#ポローニヤス">あなた</persName>は、いまの<placeName corresp="#エルシノア">エルシノア王城</placeName>に無くてはかなわぬ人です。</p>
             </sp>
             <sp who="#ポローニヤス">
                <speaker>ポロ</speaker>
@@ -1062,7 +1076,7 @@
             <sp who="#ハムレット">
                <speaker>ハム</speaker>
                <p>なんです、いったい、なんの事を言っているのです。<persName ref="#ポローニヤス">ポローニヤス</persName>、 言葉が過ぎやしませんか？　<persName ref="#ハムレット">僕</persName>は、 <persName ref="#ハムレット">あなた</persName>の主人だとか何とか、そんな事は考えていませんが、 あなたの言葉は、たとい親しい友人同志の間であっても笑っては済まされん。<persName ref="#ハムレット">僕</persName>は、
-                     御推量のとおり、だらしのない、弱虫の、道楽者です。何一つ、<persName>あなた達</persName>のお手伝いが出来ません。 けれども、僕だって<placeName>デンマーク国</placeName>の<span type="ruby"><span type="rb">為</span><span type="rp">（</span><span type="rt">ため</span><span type="rp">）</span></span>には、いつでも命を捨てるつもりなのだ。ハムレット王家の将来に <span type="ruby"
+                     御推量のとおり、だらしのない、弱虫の、道楽者です。何一つ、<persName>あなた達</persName>のお手伝いが出来ません。 けれども、僕だって<placeName corresp="#デンマーク">デンマーク国</placeName>の<span type="ruby"><span type="rb">為</span><span type="rp">（</span><span type="rt">ため</span><span type="rp">）</span></span>には、いつでも命を捨てるつもりなのだ。ハムレット王家の将来に <span type="ruby"
                         ><span type="rb">就</span><span type="rp">（</span><span type="rt">つ</span><span type="rp">）</span></span>いても、心をくだいている筈だ。 <persName ref="#ポローニヤス">ポローニヤス</persName>、言葉が過ぎます。 何をそんなにこわい顔をして怒っているのです。失敬ですよ。</p>
             </sp>
             <sp who="#ポローニヤス">
