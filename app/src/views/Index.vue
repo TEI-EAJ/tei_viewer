@@ -174,6 +174,9 @@
     <v-dialog v-model="dialog_information" width="80%">
       <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
         <v-card-text class="text--primary">
+          <h1 class="my-5">読み込み時のURL</h1>
+          <a :href="current" target="_blank">{{current}}</a>
+          <hr class="my-5" />
           <h1 class="my-5">使用データ</h1>
           <a :href="u" v-if="u" target="_blank">{{u}}</a>
           <hr class="my-5" />
@@ -409,6 +412,9 @@ export default {
       return {
         e: this.e
       };
+    },
+    current: function() {
+      return decodeURIComponent(window.location.href);
     }
   },
   methods: {
@@ -417,7 +423,9 @@ export default {
         //window.open(response.data.uri, '_blank');
         this.link1 = response.data.uri;
         this.link2 =
-          "https://tei-eaj.github.io/tei_viewer/app/#/?u=" +
+          window.location.origin +
+          window.location.pathname +
+          "#/?u=" +
           this.u +
           "&config=" +
           this.link1;
