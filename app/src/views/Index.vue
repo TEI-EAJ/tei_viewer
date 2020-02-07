@@ -241,6 +241,8 @@ import Wordcloud from "../components/Wordcloud/Index.vue";
 import HelloWorld from "../components/HelloWorld/Index.vue";
 import MainText from "../components/MainText/Index.vue";
 
+import Timeline from "../components/Timeline/Index.vue";
+
 var convert = require("xml-js");
 
 export default {
@@ -259,7 +261,8 @@ export default {
     Pie,
     Wordcloud,
     HelloWorld,
-    MainText
+    MainText,
+    Timeline
   },
   data: () => ({
     area: [
@@ -345,12 +348,17 @@ export default {
       {
         value: "MIMA",
         text: "関連コンテンツ"
+      },
+      {
+        value: "Timeline",
+        text: "チャプター毎の呼称の可視化"
       }
     ],
     map: {
       固有表現の出現頻度: Graph,
       呼称割合の可視化: Pie,
-      ワードクラウド: Wordcloud
+      ワードクラウド: Wordcloud,
+      チャプター毎の呼称の可視化: Timeline
     }
   }),
   mounted() {
