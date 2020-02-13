@@ -237,11 +237,13 @@ import Name from "../components/Name/Index.vue";
 import Sp from "../components/Sp/Index.vue";
 import Graph from "../components/Graph/Index.vue";
 import Pie from "../components/Pie/Index.vue";
-import Wordcloud from "../components/Wordcloud/Index.vue";
+
 import HelloWorld from "../components/HelloWorld/Index.vue";
 import MainText from "../components/MainText/Index.vue";
 
+import Wordcloud from "../components/Wordcloud/Index.vue";
 import Timeline from "../components/Timeline/Index.vue";
+import Called from "../components/Called/Index.vue";
 
 var convert = require("xml-js");
 
@@ -259,10 +261,12 @@ export default {
     Sp,
     Graph,
     Pie,
-    Wordcloud,
     HelloWorld,
     MainText,
-    Timeline
+
+    Wordcloud,
+    Timeline,
+    Called
   },
   data: () => ({
     area: [
@@ -338,31 +342,48 @@ export default {
         text: "発話内容"
       },
       {
-        value: "Graph",
-        text: "固有表現の出現頻度"
-      },
-      {
-        value: "Pie",
-        text: "呼称割合の可視化"
-      },
-      {
         value: "MIMA",
         text: "関連コンテンツ"
       },
       {
+        value: "Wordcloud",
+        text: "ワードクラウド",
+        type: "all"
+      },
+      {
+        value: "Graph",
+        text: "固有表現の出現頻度",
+        type: "all"
+      },
+      {
+        value: "Pie",
+        text: "呼称割合の可視化",
+        type: "all"
+      },
+      {
         value: "Timeline",
-        text: "チャプター毎の呼称の可視化"
+        text: "チャプター毎の呼称の可視化",
+        type: "all"
+      },
+      {
+        value: "Called",
+        text: "発話者別の呼称の可視化",
+        type: "all"
       }
     ],
-    map: {
-      固有表現の出現頻度: Graph,
-      呼称割合の可視化: Pie,
-      ワードクラウド: Wordcloud,
-      チャプター毎の呼称の可視化: Timeline
-    }
+    map: {}
   }),
   mounted() {
     window.addEventListener("resize", this.handleResize);
+
+    let items = this.items;
+    for (let i = 0; i < items.length; i++) {
+      let obj = items[i];
+      if (obj.type !== "all") {
+        continue;
+      }
+      this.map[obj.text] = obj.value;
+    }
 
     //areaが優先
     if (this.$route.query.area) {
@@ -379,6 +400,10 @@ export default {
         });
     }
 
+    if (this.$route.query.c) {
+      this.dialog_component = this.$route.query.c;
+      this.dialog = true;
+    }
     this.init();
   },
   watch: {
