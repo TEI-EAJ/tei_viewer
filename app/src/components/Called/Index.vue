@@ -254,10 +254,73 @@ export default {
       this.data = data;
       this.options = options;
     },
-    init() {
-      //this.arr = [];
-      //this.id = null;
+    execDiv(div) {
+      let map = {};
 
+      let sps = div.querySelectorAll("speaker");
+      for (let i = 0; i < sps.length; i++) {
+        let sp = sps[i];
+        let parent = sp.parentElement;
+        if (!parent.attributes.who) {
+          continue;
+        }
+
+        let sp_id = parent.attributes.who.value.replace("#", "");
+
+        if (this.items.indexOf(sp_id) == -1) {
+          this.items.push(sp_id);
+        }
+
+        if (!map[sp_id]) {
+          map[sp_id] = {};
+        }
+
+        let tmp = map[sp_id];
+
+        let ps = sp.parentElement.querySelectorAll("p");
+
+        for (let k = 0; k < ps.length; k++) {
+          let p = ps[k];
+          let persons = p.querySelectorAll("persName");
+          for (let m = 0; m < persons.length; m++) {
+            let person = persons[m];
+
+            let ref = "";
+            let text = person.textContent;
+
+            if (!person.attributes) {
+              continue;
+            }
+
+            if (person.attributes.ref) {
+              ref = person.attributes.ref.value;
+            } else if (person.attributes.corresp) {
+              ref = person.attributes.corresp.value;
+            } else {
+              continue;
+            }
+            let refs = ref.split(" ");
+            for (let n = 0; n < refs.length; n++) {
+              let pid = refs[n].replace("#", "");
+
+              if (!tmp[pid]) {
+                tmp[pid] = {};
+              }
+
+              let tmp2 = tmp[pid];
+              if (!tmp2[text]) {
+                tmp2[text] = 0;
+              }
+
+              tmp2[text] += 1;
+            }
+          }
+        }
+      }
+
+      return map;
+    },
+    init() {
       let xml = this.xml;
 
       if (!xml) {
@@ -268,69 +331,19 @@ export default {
 
       let heads = xml.querySelector("body").querySelectorAll("head");
 
-      for (let i = 0; i < heads.length; i++) {
-        let obj = heads[i];
+      if (heads.length > 0) {
+        for (let i = 0; i < heads.length; i++) {
+          let obj = heads[i];
 
-        let div = obj.parentNode;
+          let div = obj.parentNode;
 
-        let map = {};
-        result[obj.textContent] = map;
-
-        let sps = div.querySelectorAll("speaker");
-        for (let i = 0; i < sps.length; i++) {
-          let sp = sps[i];
-          let sp_id = sp.parentElement.attributes.who.value.replace("#", "");
-
-          if (this.items.indexOf(sp_id) == -1) {
-            this.items.push(sp_id);
-          }
-
-          if (!map[sp_id]) {
-            map[sp_id] = {};
-          }
-
-          let tmp = map[sp_id];
-
-          let ps = sp.parentElement.querySelectorAll("p");
-
-          for (let k = 0; k < ps.length; k++) {
-            let p = ps[k];
-            let persons = p.querySelectorAll("persName");
-            for (let m = 0; m < persons.length; m++) {
-              let person = persons[m];
-
-              let ref = "";
-              let text = person.textContent;
-
-              if (!person.attributes) {
-                continue;
-              }
-
-              if (person.attributes.ref) {
-                ref = person.attributes.ref.value;
-              } else if (person.attributes.corresp) {
-                ref = person.attributes.corresp.value;
-              } else {
-                continue;
-              }
-              let refs = ref.split(" ");
-              for (let n = 0; n < refs.length; n++) {
-                let pid = refs[n].replace("#", "");
-
-                if (!tmp[pid]) {
-                  tmp[pid] = {};
-                }
-
-                let tmp2 = tmp[pid];
-                if (!tmp2[text]) {
-                  tmp2[text] = 0;
-                }
-
-                tmp2[text] += 1;
-              }
-            }
-          }
+          let map = this.execDiv(div);
+          result[obj.textContent] = map;
         }
+      } else {
+        let div = xml.querySelector("body");
+        let map = this.execDiv(div);
+        result["All"] = map;
       }
 
       this.result = result;

@@ -146,9 +146,6 @@ export default {
       this.options = options;
     },
     init() {
-      //this.arr = [];
-      //this.id = null;
-
       let xml = this.xml;
 
       if (!xml) {
