@@ -14,6 +14,19 @@
 </template>
 
 <script>
+class SPARQLQueryDispatcher {
+  constructor(endpoint) {
+    this.endpoint = endpoint;
+  }
+
+  query(sparqlQuery) {
+    const fullUrl = this.endpoint + "?query=" + encodeURIComponent(sparqlQuery);
+    const headers = { Accept: "application/sparql-results+json" };
+
+    return fetch(fullUrl, { headers }).then(body => body.json());
+  }
+}
+
 import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 import { Icon } from "leaflet";
 
@@ -35,21 +48,100 @@ export default {
     LMarker,
     LPopup
   },
+  props: ["xml", "props"],
+  mounted() {
+    this.init();
+    this.main();
+  },
+  watch: {
+    props: function() {
+      this.main();
+    },
+    xml: function() {
+      this.init();
+    }
+  },
   data() {
     return {
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
-      zoom: 8,
+      zoom: 3,
       center: [35.693825, 139.703356],
       attribution: "Sample Organization",
       markers: []
     };
   },
   methods: {
-    /*
-    messageLog(dat) {
-        this.$emit('parentMessage', dat)
+    init() {},
+    main: function() {
+      let label = null;
+      let obj = this.props.e;
+
+      let attrs = ["corresp", "ref"];
+      if (obj && obj.attributes) {
+        for (let i = 0; i < attrs.length; i++) {
+          let attr = attrs[i];
+          if (obj.attributes[attr]) {
+            let id = obj.attributes[attr];
+            if (id.indexOf("#") != -1) {
+              id = id.replace("#", "");
+            } else {
+              //ローカル値
+              let tmp = id.split("/");
+              id = tmp[tmp.length - 1];
+            }
+            label = id;
+          }
+        }
+      } else if (obj && obj.elements) {
+        label = obj.elements[0].text;
+      }
+
+      const endpointUrl = "https://query.wikidata.org/sparql";
+      const sparqlQuery =
+        `#ネコ
+      SELECT *
+      WHERE 
+      {
+        ?item rdfs:label "` +
+        label +
+        `"@ja; rdfs:label ?label . filter(lang(?label) = "ja") .  
+        ?item wdt:P625 ?location .
+        optional { ?item wdt:P18 ?image }
+      }`;
+
+      const self = this;
+      this.markers = [];
+      const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+      queryDispatcher.query(sparqlQuery).then(function(data) {
+        let results = data.results.bindings;
+
+        let tlat = 0;
+        let tlong = 0;
+        for (let i = 0; i < results.length; i++) {
+          let obj = results[i];
+
+          let location = obj.location.value
+            .replace(")", "(")
+            .split("(")[1]
+            .split(" ");
+
+          let lat = location[1];
+          let long = location[0];
+
+          let marker = {
+            latlng: [Number(lat), Number(long)],
+            content: obj.label.value,
+            url: obj.item.value
+          };
+          self.markers.push(marker);
+          tlat += Number(lat);
+          tlong += Number(long);
+        }
+
+        let center = [tlat / results.length, tlong / results.length];
+        self.center = center;
+      });
     }
-    */
   }
 };
 </script>
