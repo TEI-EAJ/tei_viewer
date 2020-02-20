@@ -245,6 +245,8 @@ import Wordcloud from "../components/Wordcloud/Index.vue";
 import Timeline from "../components/Timeline/Index.vue";
 import Called from "../components/Called/Index.vue";
 
+import IIIF from "../components/IIIF/Index.vue";
+
 var convert = require("xml-js");
 
 export default {
@@ -266,13 +268,15 @@ export default {
 
     Wordcloud,
     Timeline,
-    Called
+    Called,
+
+    IIIF
   },
   data: () => ({
     area: [
       { w: 25, h: 50, c1: "Person", c2: "Place" },
       { w: 50, h: 100, c1: "MainText", c2: null },
-      { w: 25, h: 50, c1: "Name", c2: "Sp" }
+      { w: 25, h: 50, c1: "Name", c2: "IIIF" }
     ],
 
     dialog_component: null,
@@ -346,6 +350,10 @@ export default {
         text: "関連コンテンツ"
       },
       {
+        value: "IIIF",
+        text: "Mirador"
+      },
+      {
         value: "Wordcloud",
         text: "ワードクラウド",
         type: "all"
@@ -388,6 +396,15 @@ export default {
     //areaが優先
     if (this.$route.query.area) {
       this.area = JSON.parse(this.$route.query.area);
+    } else if (this.$route.query.feature) {
+      let feature = this.$route.query.feature;
+      if(feature == "i"){
+        this.area = [
+          { w: 0, h: 0, c1: null, c2: null },
+          { w: 50, h: 100, c1: "MainText", c2: null },
+          { w: 50, h: 100, c1: "IIIF", c2: null }
+        ]
+      }
     } else if (this.$route.query.config) {
       let config = this.$route.query.config;
       this.config = config;

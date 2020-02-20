@@ -23,8 +23,18 @@
           ></MainText>
         </span>
       </template>
+      <template v-else-if="obj.name == 'date'">
+        <v-tooltip bottom :key="key">
+          <template v-slot:activator="{ on }">
+            <span v-on="on" :style="style(obj.name)">
+              <MainText :key="key" v-if="obj.elements" :elements="obj.elements" :parent="obj.name"></MainText>
+            </span>
+          </template>
+          <span>{{obj.attributes}}</span>
+        </v-tooltip>
+      </template>
       <template v-else-if="obj.name == 'teiHeader'">
-        <v-sheet :key="key" class="pa-5" color="grey lighten-3">
+        <v-sheet :key="key" class="pa-5 mb-5" color="grey lighten-3">
           <MainText
             v-on:parentMessage="messageLog"
             :key="key"
@@ -61,24 +71,36 @@
         obj.name == 'speaker'
         "
       >
-        <span
-          :class="'tei-'+obj.name"
-          :key="key"
-          :style="parent != 'person' && parent != 'respStmt' ? style(obj.name) : 'margin-right : 10px; margin-left : 10px;'"
-          @click="parent != 'person' && parent != 'respStmt' ? $emit('parentMessage', obj) : ''"
-          :id="obj.id"
-        >
-          <MainText
-            v-on:parentMessage="messageLog"
-            :key="key"
-            v-if="obj.elements"
-            :elements="obj.elements"
-            :parent="obj.name"
-          ></MainText>
-        </span>
+        <v-tooltip bottom :key="key">
+          <template v-slot:activator="{ on }">
+            <span
+              v-on="obj.attributes ? on : null"
+              :class="'tei-'+obj.name"
+              :key="key"
+              :style="parent != 'person' && parent != 'respStmt' ? style(obj.name) : 'margin-right : 10px; margin-left : 10px;'"
+              @click="parent != 'person' && parent != 'respStmt' ? $emit('parentMessage', obj) : ''"
+              :id="obj.id"
+            >
+              <MainText
+                v-on:parentMessage="messageLog"
+                :key="key"
+                v-if="obj.elements"
+                :elements="obj.elements"
+                :parent="obj.name"
+              ></MainText>
+            </span>
+          </template>
+          <span>{{obj.attributes}}</span>
+        </v-tooltip>
       </template>
       <template v-else-if="obj.name != 'figure'">
         <span :class="'tei-'+obj.name" :key="key">
+          <span
+            v-if="obj.attributes && obj.attributes.facs && obj.attributes.facs.startsWith('#')"
+            @click="$emit('parentMessage', obj)"
+          >
+            <i class="fas fa-camera primary--text"></i>
+          </span>
           <MainText
             v-on:parentMessage="messageLog"
             :key="key"
@@ -130,6 +152,8 @@ export default {
         color = "0,255,0"; //green
       } else if (dat == "placeName") {
         color = "255,0,0"; //red
+      } else if (dat == "date") {
+        color = "255,165,0"; //
       }
       return "background-color : rgba(" + color + ", 0.2);";
     }
