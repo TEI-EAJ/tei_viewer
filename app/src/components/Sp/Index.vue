@@ -60,7 +60,7 @@ export default {
       this.arr = [];
       this.id = null;
 
-      let attrs = ["corresp", "ref"];
+      let attrs = ["corresp", "ref", "sameAs"];
 
       //選択語
       let obj = this.props.e;

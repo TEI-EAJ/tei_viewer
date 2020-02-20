@@ -73,7 +73,7 @@ export default {
       let obj = this.props.e;
       if (obj && obj.attributes) {
         let id = null;
-        let attrs = ["corresp", "ref"];
+        let attrs = ["corresp", "ref", "sameAs"];
         for (let i = 0; i < attrs.length; i++) {
           let attr = attrs[i];
           if (obj.attributes[attr]) {

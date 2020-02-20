@@ -68,7 +68,7 @@ export default {
 
       let id = null;
 
-      let attrs = ["corresp", "ref"];
+      let attrs = ["corresp", "ref", "sameAs"];
 
       //戯曲の場合
       if (obj && obj.name == "speaker") {
@@ -83,7 +83,7 @@ export default {
           }
         }
       } else if (obj && obj.attributes) {
-        let attrs = ["corresp", "ref"];
+        let attrs = ["corresp", "ref", "sameAs"];
         for (let i = 0; i < attrs.length; i++) {
           let attr = attrs[i];
           if (obj.attributes[attr]) {

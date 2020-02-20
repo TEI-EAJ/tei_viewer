@@ -24,7 +24,7 @@ export default {
       let xml = this.xml;
 
       let eles = this.eles;
-      let attrs = ["corresp", "ref"];
+      let attrs = ["corresp", "ref", "sameAs"];
 
       if (!xml) {
         return;
