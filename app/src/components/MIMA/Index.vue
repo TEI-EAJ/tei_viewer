@@ -77,6 +77,9 @@ export default {
         label +
         "&_=1581945921405";
 
+      //検索結果の初期化
+      this.results = []
+
       axios
         .get(url)
         .then(

@@ -49,6 +49,12 @@ export default {
           avator:
             "https://cdn0.iconfinder.com/data/icons/most-usable-logos/120/Amazon-512.png",
           link: "https://www.amazon.co.jp/s?k="
+        },
+        {
+          title: "Google ショッピング",
+          avator:
+            "https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/2630585241548141934-256.png",
+          link: "https://www.google.com/search?tbm=shop&q="
         }
       ]
     };
