@@ -1,3 +1,4 @@
+*-lock.json
 .DS_Store
 src/line_detect/data
 ~*
