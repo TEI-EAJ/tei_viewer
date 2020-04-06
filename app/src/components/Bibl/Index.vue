@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-2">
     <v-toolbar class="headline grey lighten-2" flat>
-      <v-toolbar-title>人物情報</v-toolbar-title>
+      <v-toolbar-title>書誌項目引用</v-toolbar-title>
     </v-toolbar>
 
     <v-card-title>{{obj.id}}</v-card-title>
@@ -10,10 +10,16 @@
 
     <v-card-text>
       <p v-if="obj.persName"><b>名前: </b>{{obj.persName}}</p>
-      <p v-if="obj.idno">
+      <p v-if="obj.idno && obj.idno.length > 0">
+        {{obj}}
         <b>ID: </b>
         <template v-for="(value, index) in obj.idno">
-          <a :key="index" :href="value" target="_blank">{{value}}</a>
+          <template v-if="value.type == 'URI'">
+            <a :key="index" :href="value.value" target="_blank">{{value.value}}</a>
+          </template>
+          <template v-else>
+            <span :key="index">{{value.value}}</span>
+          </template>
           <span :key="'s_'+index" v-if="index != obj.idno.length - 1">, </span>
         </template>
       </p>
@@ -52,39 +58,42 @@ export default {
         return;
       }
 
-      let listPerson = xml.querySelector("listPerson");
-      if (!listPerson) {
+      let listBibl = xml.querySelector("listBibl");
+      if (!listBibl) {
         return;
       }
 
-      let persons = listPerson.querySelectorAll("person");
+      let bibls = listBibl.querySelectorAll("bibl");
 
       let map = {};
 
-      for (let i = 0; i < persons.length; i++) {
-        let person = persons[i];
+      for (let i = 0; i < bibls.length; i++) {
+        let bibl = bibls[i];
         let obj = {};
-        if(person.attributes["xml:id"]){
-          obj.id = person.attributes["xml:id"].value
+        if(bibl.attributes["xml:id"]){
+          obj.id = bibl.attributes["xml:id"].value
         }
-        if (person.querySelectorAll("persName")) {
-          let persNames = []
-          let nodeList = person.querySelectorAll("persName")
+        if (bibl.querySelectorAll("title")) {
+          let biblNames = []
+          let nodeList = bibl.querySelectorAll("title")
           for(let j = 0; j < nodeList.length; j++){
             let node = nodeList[j]
-            persNames.push(node.textContent)
+            biblNames.push(node.textContent)
           }
-          obj.persName = persNames.join(", ")
+          obj.biblName = biblNames.join(", ")
         }
-        if (person.querySelector("occupation")) {
-          obj.occupation = person.querySelector("occupation").textContent;
-        }
-        if (person.querySelectorAll("idno")) {
+        if (bibl.querySelectorAll("idno")) {
           let idnos = []
-          let nodeList = person.querySelectorAll("idno")
+          let nodeList = bibl.querySelectorAll("idno")
           for(let j = 0; j < nodeList.length; j++){
             let node = nodeList[j]
-            idnos.push(node.textContent)
+            let value = {
+              "value" : node.textContent
+            }
+            if(node.attributes["type"]){
+              value.type = node.attributes["type"].value
+            }
+            idnos.push(value)
           }
           obj.idno = idnos
         }

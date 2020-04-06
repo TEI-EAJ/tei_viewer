@@ -111,6 +111,7 @@ export default {
           let size = 0;
           for (let i = 0; i < persNames.length; i++) {
             let persName = persNames[i];
+            console.log(persName)
             let text = persName.textContent;
             if (!map[text]) {
               map[text] = 0;

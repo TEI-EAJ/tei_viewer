@@ -68,7 +68,8 @@
         obj.name == 'placeName' || 
         obj.name == 'name' || 
         obj.name == 'rs' ||
-        obj.name == 'speaker'
+        obj.name == 'speaker' || 
+        obj.name == 'bibl'
         "
       >
         <v-tooltip bottom :key="key">
@@ -154,6 +155,8 @@ export default {
         color = "255,0,0"; //red
       } else if (dat == "date") {
         color = "255,165,0"; //
+      } else if (dat == "bibl") {
+        color = "128,0,128"; //
       }
       return "background-color : rgba(" + color + ", 0.2);";
     }

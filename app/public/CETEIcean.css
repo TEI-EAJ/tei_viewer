@@ -240,7 +240,9 @@
 /* c */
 .tei-c {
   /* Empty Rule Set */
-  font-size: 20%;
+}
+.tei-metamark {
+  font-size : 20%;
 }
 .tei-cRefPattern {
   display: none;

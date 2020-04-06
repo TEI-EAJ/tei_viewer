@@ -16,7 +16,7 @@
         <v-menu left bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" @click="dialog_config = !dialog_config;">
-              <v-icon>mdi-settings</v-icon>
+              <i class="fas fa-cog"></i>
             </v-btn>
           </template>
         </v-menu>
@@ -49,8 +49,23 @@
     <div v-show="!start">
       <v-container class="my-5">
         <h2 class="mb-5">TEI Level 4 Viewer</h2>
+
+
+
         <p>TEI/XMLファイルを選択してください。</p>
         <input type="file" id="files" @change="handleFileSelect" multiple />
+
+        <!-- 
+
+        <hr class="my-5" />
+
+        <p>TEI/XMLファイルのURLを入力してください。</p>
+
+
+
+        <hr class="my-5" />
+
+        -->
 
         <output id="list" class="mt-5"></output>
 
@@ -232,6 +247,7 @@ import MIMA from "../components/MIMA/Index.vue";
 
 import Person from "../components/Person/Index.vue";
 import Place from "../components/Place/Index.vue";
+import Bibl from "../components/Bibl/Index.vue";
 
 import Name from "../components/Name/Index.vue";
 import Sp from "../components/Sp/Index.vue";
@@ -258,6 +274,7 @@ export default {
 
     Person,
     Place,
+    Bibl,
 
     Name,
     Sp,
@@ -315,6 +332,10 @@ export default {
       {
         value: "Place",
         text: "場所"
+      },
+      {
+        value: "Bibl",
+        text: "書誌項目引用"
       },
 
       {

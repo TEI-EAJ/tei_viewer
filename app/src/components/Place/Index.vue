@@ -4,9 +4,19 @@
       <v-toolbar-title>場所情報</v-toolbar-title>
     </v-toolbar>
 
-    <v-card-title>{{obj.placeName}}</v-card-title>
+    <v-card-title>{{obj.id}}</v-card-title>
 
     <v-card-subtitle>{{obj.desc}}</v-card-subtitle>
+
+    <v-card-text>
+      <p v-if="obj.placeName"><b>名前: </b>{{obj.placeName}}</p>
+      <p v-if="obj.idno"><b>ID: </b>
+        <template v-for="(value, index) in obj.idno">
+          <a :key="index" :href="value" target="_blank">{{value}}</a>
+          <span :key="'s_'+index" v-if="index != obj.idno.length - 1">, </span>
+        </template>
+      </p>
+    </v-card-text>
 
     <!-- <v-card-text style="background-color : yellow">{{e}}</v-card-text> -->
   </v-card>
@@ -52,15 +62,30 @@ export default {
 
       for (let i = 0; i < places.length; i++) {
         let place = places[i];
-        let id = place.attributes["xml:id"].value;
-        let obj = {
-          id: id
-        };
-        if (place.querySelector("placeName")) {
-          obj.placeName = place.querySelector("placeName").textContent;
+        let obj = {};
+        if(place.attributes["xml:id"]){
+          obj.id = place.attributes["xml:id"].value
+        }
+        if (place.querySelectorAll("placeName")) {
+          let placeNames = []
+          let nodeList = place.querySelectorAll("placeName")
+          for(let j = 0; j < nodeList.length; j++){
+            let node = nodeList[j]
+            placeNames.push(node.textContent)
+          }
+          obj.placeName = placeNames.join(", ")
         }
         if (place.querySelector("desc")) {
           obj.desc = place.querySelector("desc").textContent;
+        }
+        if (place.querySelectorAll("idno")) {
+          let idnos = []
+          let nodeList = place.querySelectorAll("idno")
+          for(let j = 0; j < nodeList.length; j++){
+            let node = nodeList[j]
+            idnos.push(node.textContent)
+          }
+          obj.idno = idnos
         }
         map[obj.id] = obj;
       }
