@@ -94,6 +94,20 @@
           <span>{{obj.attributes}}</span>
         </v-tooltip>
       </template>
+
+      <!-- 青空自動TEI用 -->
+      <template v-else-if="obj.name == 'seg' && obj.attributes && obj.attributes.rendition">
+          <span :class="'tei-'+obj.attributes.rendition" :style="obj.attributes.style" :key="key">
+            <MainText
+              v-on:parentMessage="messageLog"
+              :key="key"
+              v-if="obj.elements"
+              :elements="obj.elements"
+              :parent="obj.name"
+            ></MainText>
+          </span>
+      </template>
+
       <template v-else-if="obj.name != 'figure'">
         <span :class="'tei-'+obj.name" :key="key">
           <span

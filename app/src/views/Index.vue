@@ -159,7 +159,7 @@
           >
             <pane :size="obj.h">
               <template v-if="obj.c1 == 'MainText'">
-                <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="overflow:auto; height:99%;">
                   <v-card-text class="text--primary">
                     <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
                   </v-card-text>
@@ -171,7 +171,7 @@
             </pane>
             <pane :size="100-obj.h">
               <template v-if="obj.c2 == 'MainText'">
-                <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="overflow:auto; height:99%;">
                   <v-card-text class="text--primary">
                     <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
                   </v-card-text>
@@ -400,7 +400,8 @@ export default {
         type: "all"
       }
     ],
-    map: {}
+    map: {},
+    vertical: false
   }),
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -412,6 +413,10 @@ export default {
         continue;
       }
       this.map[obj.text] = obj.value;
+    }
+
+    if (this.$route.query.textDirection == "vertical") {
+      this.vertical = true
     }
 
     //areaが優先
@@ -635,3 +640,16 @@ export default {
   }
 };
 </script>
+
+<style>
+.scroll {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.vertical {
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+</style>
