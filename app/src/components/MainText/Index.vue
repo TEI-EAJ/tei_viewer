@@ -23,7 +23,7 @@
           ></MainText>
         </span>
       </template>
-      <template v-else-if="obj.name == 'date'">
+      <template v-else-if="obj.name == 'date' || obj.name == 'time'">
         <v-tooltip bottom :key="key">
           <template v-slot:activator="{ on }">
             <span v-on="on" :style="style(obj.name)">
@@ -109,7 +109,7 @@
       </template>
 
       <template v-else-if="obj.name != 'figure'">
-        <span :class="'tei-'+obj.name" :key="key">
+        <span :class="'tei-'+obj.name" :key="key" :id="obj.attributes ? obj.attributes['xml:id'] : null">
           <span
             v-if="obj.attributes && obj.attributes.facs && obj.attributes.facs.startsWith('#')"
             @click="$emit('parentMessage', obj)"
@@ -171,6 +171,8 @@ export default {
         color = "255,165,0"; //
       } else if (dat == "bibl") {
         color = "128,0,128"; //
+      } else if (dat == "time") {
+        color = "128,165,0"; //
       }
       return "background-color : rgba(" + color + ", 0.2);";
     }

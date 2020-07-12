@@ -5,3 +5,4 @@ src/line_detect/data
 node_modules
 pm
 auto_ml
+*.lock

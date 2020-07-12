@@ -5,6 +5,14 @@
       <v-spacer></v-spacer>
 
       <template v-if="start">
+        <v-menu left bottom v-if="hash">
+          <template v-slot:activator="{ on }">
+            <v-btn icon v-on="on" @click="scroll();">
+              <v-icon>mdi-link</v-icon>
+            </v-btn>
+          </template>
+        </v-menu>
+
         <v-menu left bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" @click="dialog_information = !dialog_information;">
@@ -159,7 +167,7 @@
           >
             <pane :size="obj.h">
               <template v-if="obj.c1 == 'MainText'">
-                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="overflow:auto; height:99%;">
+                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="overflow:auto; height:99%;" id="mainTextDiv">
                   <v-card-text class="text--primary">
                     <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
                   </v-card-text>
@@ -401,7 +409,9 @@ export default {
       }
     ],
     map: {},
-    vertical: false
+    vertical: false,
+
+    hash: null,
   }),
   mounted() {
     window.addEventListener("resize", this.handleResize);
@@ -442,6 +452,8 @@ export default {
           this.area = response.data;
         });
     }
+
+    this.hash = this.$route.hash
 
     if (this.$route.query.c) {
       this.dialog_component = this.$route.query.c;
@@ -494,6 +506,10 @@ export default {
     }
   },
   methods: {
+    scroll(){
+      this.$SmoothScroll(document.querySelector(this.hash).getBoundingClientRect()
+              .top - (64 + 7), 400, null, document.querySelector("#mainTextDiv"), 'y')
+    },
     export_myjson() {
       axios.post("https://api.myjson.com/bins", this.area).then(response => {
         //window.open(response.data.uri, '_blank');

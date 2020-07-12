@@ -11,6 +11,9 @@ Vue.component("MainText", MainText);
 Vue.component("Splitpanes", Splitpanes);
 Vue.component("Pane", Pane);
 
+import vueSmoothScroll from 'vue-smoothscroll'
+Vue.use(vueSmoothScroll)
+
 new Vue({
   router,
   vuetify,
