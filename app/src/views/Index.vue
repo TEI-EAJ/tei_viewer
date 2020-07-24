@@ -167,7 +167,7 @@
           >
             <pane :size="obj.h">
               <template v-if="obj.c1 == 'MainText'">
-                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="width: 100%; overflow:auto; height:99%;" id="mainTextDiv">
+                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="overflow:auto; height:99%;" id="mainTextDiv">
                   <v-card-text class="text--primary">
                     <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
                   </v-card-text>
