@@ -102,6 +102,20 @@ export default {
         let param_str = encodeURIComponent(JSON.stringify(params));
 
         this.url = "mirador/?params=" + param_str;
+      } else if(obj === null){
+        let xml = this.xml;
+        let surfaceGrp = xml.querySelector('surfaceGrp');
+        let manifest = surfaceGrp.attributes.facs.value;
+
+        let params = [
+          {
+            manifest: manifest
+          }
+        ];
+
+        let param_str = encodeURIComponent(JSON.stringify(params));
+
+        this.url = "mirador/?params=" + param_str;
       }
     }
   }

@@ -23,7 +23,7 @@
           ></MainText>
         </span>
       </template>
-      <template v-else-if="obj.name == 'date' || obj.name == 'time'">
+      <template v-else-if="obj.name == 'date' || obj.name == 'time' || obj.name == 'note'">
         <v-tooltip bottom :key="key">
           <template v-slot:activator="{ on }">
             <span v-on="on" :style="style(obj.name)">
