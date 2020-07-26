@@ -211,7 +211,7 @@
           >
             <pane :size="obj.h">
               <template v-if="obj.c1 == 'MainText'">
-                <v-card class="ma-2 pa-0" :class="vertical ? 'scroll vertical' : ''" style="height:99%;" id="mainTextDiv">
+                <v-card class="ma-2 pa-0" :class="vertical ? 'scroll vertical' : ''" :style="'width: '+width+'px;height:99%;'" id="mainTextDiv">
                   <v-card-text class="text--primary">
                     <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
                   </v-card-text>
@@ -683,7 +683,7 @@ export default {
       }
       */
 
-      await axios
+      const xmlNode = await axios
         .get(u, {
           //responseType: "document"
         })
@@ -693,16 +693,12 @@ export default {
             var dpObj = new DOMParser();
             xml_node = dpObj.parseFromString(xml_node, "text/xml");
           }
-          this.xml = xml_node;
+          //this.xml = xml_node;
+          return xml_node
         });
 
-      this.$SmoothScroll(
-        0,
-        0,
-        null,
-        document.querySelector("#MainText"),
-        "x"
-      );
+      this.xml = xmlNode
+      
     },
     messageLog(message) {
       this.e = message;
