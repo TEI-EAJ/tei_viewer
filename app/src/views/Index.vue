@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar>
-      <v-toolbar-title>TEI Level 4 Viewer</v-toolbar-title>
+      <v-toolbar-title>TEI Multi Viewer</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <template v-if="start">
@@ -12,7 +12,44 @@
             </v-btn>
           </template>
         </v-menu>
+      
+      <v-tooltip bottom v-if="u">
+        <template v-slot:activator="{ on }">
+          <v-btn icon target="_blank" v-on="on" :href="u">
+            <v-icon>mdi-download</v-icon>
+          </v-btn>
+        </template>
+        <span>{{"TEI/XMLファイルをダウンロード"}}</span>
+      </v-tooltip>
+       
 
+      <v-tooltip bottom v-if="u">
+        <template v-slot:activator="{ on }">
+          <v-btn icon target="_blank" @click="snackbar = true; copyLink();" v-on="on"> <!-- :href="exportLink" -->
+            <v-icon>mdi-link</v-icon>
+          </v-btn>
+        </template>
+        <span>{{"現在の表示レイアウトのリンクをコピー"}}</span>
+      </v-tooltip>
+
+      <v-snackbar
+        v-model="snackbar"
+        :timeout="2000"
+      >
+        {{"リンクをコピーしました"}}
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+          >
+            {{"閉じる"}}
+          </v-btn>
+        </template>
+      </v-snackbar>
+        
+
+        <!-- 
         <v-menu left bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on" @click="dialog_information = !dialog_information;">
@@ -20,12 +57,19 @@
             </v-btn>
           </template>
         </v-menu>
+        -->
 
+        
         <v-menu left bottom>
           <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on" @click="dialog_config = !dialog_config;">
-              <i class="fas fa-cog"></i>
-            </v-btn>
+            <v-tooltip bottom v-on="on" >
+              <template v-slot:activator="{ on }">
+                <v-btn icon v-on="on" @click="dialog_config = !dialog_config;">
+                  <i class="fas fa-cog"></i>
+                </v-btn>
+              </template>
+              <span>表示設定</span>
+            </v-tooltip>
           </template>
         </v-menu>
 
@@ -56,7 +100,7 @@
 
     <div v-show="!start">
       <v-container class="my-5">
-        <h2 class="mb-5">TEI Level 4 Viewer</h2>
+        <h2 class="mb-5">TEI Multi Viewer</h2>
 
 
 
@@ -167,7 +211,7 @@
           >
             <pane :size="obj.h">
               <template v-if="obj.c1 == 'MainText'">
-                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="overflow:auto; height:99%;" id="mainTextDiv">
+                <v-card class="ma-2 pa-0" :class="vertical ? 'scroll vertical' : ''" style="height:99%;" id="mainTextDiv">
                   <v-card-text class="text--primary">
                     <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
                   </v-card-text>
@@ -179,7 +223,7 @@
             </pane>
             <pane :size="100-obj.h">
               <template v-if="obj.c2 == 'MainText'">
-                <v-card class="ma-2 pa-2" :class="vertical ? 'scroll vertical' : ''" style="overflow:auto; height:99%;">
+                <v-card class="ma-2 pa-0" :class="vertical ? 'scroll vertical' : ''" style="height:99%;">
                   <v-card-text class="text--primary">
                     <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
                   </v-card-text>
@@ -200,9 +244,11 @@
           <h1 class="my-5">読み込み時のURL</h1>
           <a :href="current" target="_blank">{{current}}</a>
           <hr class="my-5" />
+          <!--
           <h1 class="my-5">使用データ</h1>
           <a :href="u" v-if="u" target="_blank">{{u}}</a>
           <hr class="my-5" />
+          -->
           <h1 class="my-5">設定情報</h1>
           <v-sheet class="my-5 pa-5" color="grey lighten-3">{{area}}</v-sheet>
           <v-btn class="mr-2 mb-5" color="primary" @click="export_myjson">設定情報をエクスポート</v-btn>
@@ -224,7 +270,7 @@
     </v-dialog>
 
     <v-dialog v-model="dialog_config" width="80%">
-      <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
+      <v-card class="pa-2" style="overflow-y:auto; height:100%;">
         <v-card-text class="text--primary">
           <br />
           <h1>表示設定</h1>
@@ -298,6 +344,8 @@ export default {
     IIIF
   },
   data: () => ({
+    snackbar: false,
+
     area: [
       { w: 25, h: 50, c1: "Person", c2: "Place" },
       { w: 50, h: 100, c1: "MainText", c2: null },
@@ -482,7 +530,8 @@ export default {
         let param = {
           u: this.u,
           textDirection: this.vertical ? "vertical" : null,
-          area: JSON.stringify(this.area)
+          //area: JSON.stringify(this.area)
+          feature: this.$route.query.feature
         };
         if (this.config) {
           param.config = this.config;
@@ -504,7 +553,10 @@ export default {
     },
     current: function() {
       return decodeURIComponent(window.location.href);
-    }
+    },
+    exportLink: function() {
+      return window.location.href + "&area="+JSON.stringify(this.area)
+    },
   },
   methods: {
     scroll(){
@@ -512,6 +564,7 @@ export default {
               .top - (64 + 7), 400, null, document.querySelector("#mainTextDiv"), 'y')
     },
     export_myjson() {
+      /*
       axios.post("https://api.myjson.com/bins", this.area).then(response => {
         //window.open(response.data.uri, '_blank');
         this.link1 = response.data.uri;
@@ -523,6 +576,7 @@ export default {
           "&config=" +
           this.link1;
       });
+      */
       /*
       $.ajax({
         url: ,
@@ -608,7 +662,7 @@ export default {
       this.data = JSON.parse(result);
       this.start = true;
     },
-    init() {
+    async init() {
       let u = this.$route.query.u == null ? null : this.$route.query.u; //"01_with_wit.xml"
       this.u = u;
 
@@ -629,7 +683,7 @@ export default {
       }
       */
 
-      axios
+      await axios
         .get(u, {
           //responseType: "document"
         })
@@ -641,6 +695,14 @@ export default {
           }
           this.xml = xml_node;
         });
+
+      this.$SmoothScroll(
+        0,
+        0,
+        null,
+        document.querySelector("#MainText"),
+        "x"
+      );
     },
     messageLog(message) {
       this.e = message;
@@ -653,6 +715,24 @@ export default {
       } else {
         return 0;
       }
+    },
+    copyLink(){
+      const str = this.exportLink
+
+      const listener = function (e) {
+        e.clipboardData.setData('text/plain', str)
+        // 本来のイベントをキャンセル
+        e.preventDefault()
+        // 終わったら一応削除
+        document.removeEventListener('copy', listener)
+      }
+
+      // コピーのイベントが発生したときに、クリップボードに書き込むようにしておく
+      document.addEventListener('copy', listener)
+
+      // コピー
+      document.execCommand('copy')
+      // alert('Copied.')
     }
   }
 };
