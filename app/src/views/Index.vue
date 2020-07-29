@@ -7,52 +7,52 @@
       <template v-if="start">
         <v-menu left bottom v-if="hash">
           <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on" @click="scroll();">
+            <v-btn icon v-on="on" @click="scroll()">
               <v-icon>mdi-link</v-icon>
             </v-btn>
           </template>
         </v-menu>
-      
-      <v-tooltip bottom v-if="u">
-        <template v-slot:activator="{ on }">
-          <v-btn icon target="_blank" v-on="on" :href="u">
-            <v-icon>mdi-download</v-icon>
-          </v-btn>
-        </template>
-        <span>{{"TEI/XMLファイルをダウンロード"}}</span>
-      </v-tooltip>
-       
 
-      <v-tooltip bottom v-if="u">
-        <template v-slot:activator="{ on }">
-          <v-btn icon target="_blank" @click="snackbar = true; copyLink();" v-on="on">
-            <v-icon>mdi-link</v-icon>
-          </v-btn>
-        </template>
-        <span>{{"現在の表示レイアウトのリンクをコピー"}}</span>
-      </v-tooltip>
+        <v-tooltip bottom v-if="u">
+          <template v-slot:activator="{ on }">
+            <v-btn icon target="_blank" v-on="on" :href="u">
+              <v-icon>mdi-download</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ "TEI/XMLファイルをダウンロード" }}</span>
+        </v-tooltip>
 
-      <v-snackbar
-        v-model="snackbar"
-        :timeout="2000"
-      >
-        {{"リンクをコピーしました"}}
-        <template v-slot:action="{ attrs }">
-          <v-btn
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-          >
-            {{"閉じる"}}
-          </v-btn>
-        </template>
-      </v-snackbar>
-        
+        <v-tooltip bottom v-if="u">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              icon
+              target="_blank"
+              @click="
+                snackbar = true;
+                copyLink();
+              "
+              v-on="on"
+            >
+              <v-icon>mdi-link</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ "現在の表示レイアウトのリンクをコピー" }}</span>
+        </v-tooltip>
+
+        <v-snackbar v-model="snackbar" :timeout="2000">
+          {{ "リンクをコピーしました" }}
+          <template v-slot:action="{ attrs }">
+            <v-btn text v-bind="attrs" @click="snackbar = false">
+              {{ "閉じる" }}
+            </v-btn>
+          </template>
+        </v-snackbar>
+
         <v-menu left bottom>
           <template v-slot:activator="{ on }">
-            <v-tooltip bottom v-on="on" >
+            <v-tooltip bottom v-on="on">
               <template v-slot:activator="{ on }">
-                <v-btn icon v-on="on" @click="dialog_config = !dialog_config;">
+                <v-btn icon v-on="on" @click="dialog_config = !dialog_config">
                   <i class="fas fa-cog"></i>
                 </v-btn>
               </template>
@@ -69,12 +69,15 @@
           </template>
           <v-list>
             <v-list-item
-              @click="dialog_component = value; dialog = !dialog;"
+              @click="
+                dialog_component = value;
+                dialog = !dialog;
+              "
               v-for="(value, key) in map"
               :key="key"
             >
               <v-list-item-content>
-                <v-list-item-title>{{key}}</v-list-item-title>
+                <v-list-item-title>{{ key }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -83,17 +86,12 @@
         <v-btn icon href="./">
           <v-icon>mdi-home</v-icon>
         </v-btn>
-
-        
       </template>
     </v-app-bar>
 
     <div v-show="!start">
       <v-container class="my-5">
-        
         <h2 class="mb-5">TEI Multi Viewer</h2>
-
-
 
         <p>TEI/XMLファイルを選択してください。</p>
         <input type="file" id="files" @change="handleFileSelect" multiple />
@@ -110,12 +108,14 @@
           color="primary"
           href="/#/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
           class="mx-2 my-1"
-        >可視化例を見る</v-btn>
+          >可視化例を見る</v-btn
+        >
         <v-btn
           href="https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
           target="_blank"
           class="mx-2 my-1"
-        >サンプルデータを見る</v-btn>
+          >サンプルデータを見る</v-btn
+        >
 
         <br />
         <br />
@@ -126,12 +126,14 @@
           color="primary"
           href="/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
           class="mx-2 my-1"
-        >可視化例を見る</v-btn>
+          >可視化例を見る</v-btn
+        >
         <v-btn
           href="https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
           target="_blank"
           class="mx-2 my-1"
-        >サンプルデータを見る</v-btn>
+          >サンプルデータを見る</v-btn
+        >
 
         <br />
         <br />
@@ -142,33 +144,35 @@
           color="primary"
           href="/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
           class="mx-2 my-1"
-        >可視化例を見る</v-btn>
+          >可視化例を見る</v-btn
+        >
         <v-btn
           href="https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
           target="_blank"
           class="mx-2 my-1"
-        >サンプルデータを見る</v-btn>
+          >サンプルデータを見る</v-btn
+        >
 
         <br />
         <br />
 
         <p class="mt-5">
           例４：Emily Dickinson ‘Faith is a fine invention’ from
-          <a
-            href="http://v-machine.org/samples/"
-          >Versioning Machine</a>
+          <a href="http://v-machine.org/samples/">Versioning Machine</a>
         </p>
 
         <v-btn
           color="primary"
           href="/#/?u=https://tei-eaj.github.io/koui/data/faith.xml"
           class="mx-2 my-1"
-        >可視化例を見る</v-btn>
+          >可視化例を見る</v-btn
+        >
         <v-btn
           href="http://v-machine.org/samples/faith.xml"
           target="_blank"
           class="mx-2 my-1"
-        >サンプルデータを見る</v-btn>
+          >サンプルデータを見る</v-btn
+        >
       </v-container>
 
       <br />
@@ -180,7 +184,7 @@
       </v-footer>
     </div>
 
-    <div :style="'height : '+height+'px'" v-if="start">
+    <div :style="'height : ' + height + 'px'" v-if="start">
       <splitpanes class="default-theme" @resize="resize1($event)">
         <pane v-for="(obj, key) in area" :key="key" :size="obj.w">
           <splitpanes
@@ -190,9 +194,18 @@
           >
             <pane :size="obj.h">
               <template v-if="obj.c1 == 'MainText'">
-                <v-card class="ma-2 pa-0" :class="vertical ? 'scroll vertical' : ''" :style="'width: '+width+'px;height:99%;'" id="mainTextDiv">
+                <v-card
+                  class="ma-2 pa-0"
+                  :class="vertical ? 'scroll vertical' : ''"
+                  :style="'width: ' + width + 'px;height:99%;'"
+                  id="mainTextDiv"
+                >
                   <v-card-text class="text--primary">
-                    <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
+                    <MainText
+                      v-on:parentMessage="messageLog"
+                      v-if="data"
+                      :elements="data.elements"
+                    ></MainText>
                   </v-card-text>
                 </v-card>
               </template>
@@ -200,11 +213,19 @@
                 <component :is="obj.c1" :xml="xml" :props="props"></component>
               </template>
             </pane>
-            <pane :size="100-obj.h">
+            <pane :size="100 - obj.h">
               <template v-if="obj.c2 == 'MainText'">
-                <v-card class="ma-2 pa-0" :class="vertical ? 'scroll vertical' : ''" style="height:99%;">
+                <v-card
+                  class="ma-2 pa-0"
+                  :class="vertical ? 'scroll vertical' : ''"
+                  style="height:99%;"
+                >
                   <v-card-text class="text--primary">
-                    <MainText v-on:parentMessage="messageLog" v-if="data" :elements="data.elements"></MainText>
+                    <MainText
+                      v-on:parentMessage="messageLog"
+                      v-if="data"
+                      :elements="data.elements"
+                    ></MainText>
                   </v-card-text>
                 </v-card>
               </template>
@@ -221,7 +242,7 @@
       <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
         <v-card-text class="text--primary">
           <h1 class="my-5">読み込み時のURL</h1>
-          <a :href="current" target="_blank">{{current}}</a>
+          <a :href="current" target="_blank">{{ current }}</a>
           <hr class="my-5" />
           <!--
           <h1 class="my-5">使用データ</h1>
@@ -229,15 +250,17 @@
           <hr class="my-5" />
           -->
           <h1 class="my-5">設定情報</h1>
-          <v-sheet class="my-5 pa-5" color="grey lighten-3">{{area}}</v-sheet>
-          <v-btn class="mr-2 mb-5" color="primary" @click="export_myjson">設定情報をエクスポート</v-btn>
+          <v-sheet class="my-5 pa-5" color="grey lighten-3">{{ area }}</v-sheet>
+          <v-btn class="mr-2 mb-5" color="primary" @click="export_myjson"
+            >設定情報をエクスポート</v-btn
+          >
           <p v-if="link1">
             設定ファイルへのリンク:
-            <a :href="link1" target="_blank">{{link1}}</a>
+            <a :href="link1" target="_blank">{{ link1 }}</a>
           </p>
           <p v-if="link2">
             Viewerへのリンク:
-            <a :href="link2" target="_blank">{{link2}}</a>
+            <a :href="link2" target="_blank">{{ link2 }}</a>
           </p>
           <hr class="my-5" />
         </v-card-text>
@@ -255,16 +278,36 @@
           <h1>表示設定</h1>
           <br />
           <div v-for="(obj, key) in area" :key="key">
-            <v-select v-model="obj.c1" :items="items" :label="(key + 1)+'-1'"></v-select>
+            <v-select
+              v-model="obj.c1"
+              :items="items"
+              :label="key + 1 + '-1'"
+            ></v-select>
 
             <br />
 
-            <v-select v-model="obj.c2" :items="items" :label="(key + 1)+'-2'"></v-select>
+            <v-select
+              v-model="obj.c2"
+              :items="items"
+              :label="key + 1 + '-2'"
+            ></v-select>
 
             <br />
           </div>
-          <v-btn class="mr-2" @click="dialog_config = !dialog_config;" color="primary">閉じる</v-btn>
-          <v-btn @click="conf(); dialog_config = !dialog_config;" color="primary">レイアウトを調整して閉じる</v-btn>
+          <v-btn
+            class="mr-2"
+            @click="dialog_config = !dialog_config"
+            color="primary"
+            >閉じる</v-btn
+          >
+          <v-btn
+            @click="
+              conf();
+              dialog_config = !dialog_config;
+            "
+            color="primary"
+            >レイアウトを調整して閉じる</v-btn
+          >
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -322,7 +365,7 @@ export default {
     Timeline,
     Called,
 
-    IIIF
+    IIIF,
   },
   data: () => ({
     snackbar: false,
@@ -330,7 +373,7 @@ export default {
     area: [
       { w: 25, h: 50, c1: "Person", c2: "Place" },
       { w: 50, h: 100, c1: "MainText", c2: null },
-      { w: 25, h: 50, c1: "Name", c2: "Sp" }
+      { w: 25, h: 50, c1: "Name", c2: "Sp" },
     ],
 
     dialog_component: null,
@@ -359,87 +402,87 @@ export default {
     items: [
       {
         value: null,
-        text: ""
+        text: "",
       },
 
       {
         value: "Person",
-        text: "人物"
+        text: "人物",
       },
       {
         value: "Place",
-        text: "場所"
+        text: "場所",
       },
       {
         value: "Date",
-        text: "時間"
+        text: "時間",
       },
       {
         value: "Bibl",
-        text: "書誌項目引用"
+        text: "書誌項目引用",
       },
 
       {
         value: "Map",
-        text: "地図"
+        text: "地図",
       },
       {
         value: "MainText",
-        text: "本文"
+        text: "本文",
       },
       {
         value: "Link",
-        text: "外部サイト"
+        text: "外部サイト",
       },
       {
         value: "Wiki",
-        text: "Wikipedia"
+        text: "Wikipedia",
       },
       {
         value: "Name",
-        text: "呼称"
+        text: "呼称",
       },
       {
         value: "HelloWorld",
-        text: "HelloWorld"
+        text: "HelloWorld",
       },
       {
         value: "Sp",
-        text: "発話内容"
+        text: "発話内容",
       },
       {
         value: "MIMA",
-        text: "関連コンテンツ"
+        text: "関連コンテンツ",
       },
       {
         value: "IIIF",
-        text: "Mirador"
+        text: "Mirador",
       },
       {
         value: "Wordcloud",
         text: "ワードクラウド",
-        type: "all"
+        type: "all",
       },
       {
         value: "Graph",
         text: "固有表現の出現頻度",
-        type: "all"
+        type: "all",
       },
       {
         value: "Pie",
         text: "呼称割合の可視化",
-        type: "all"
+        type: "all",
       },
       {
         value: "Timeline",
         text: "チャプター毎の呼称の可視化",
-        type: "all"
+        type: "all",
       },
       {
         value: "Called",
         text: "発話者別の呼称の可視化",
-        type: "all"
-      }
+        type: "all",
+      },
     ],
     map: {},
     vertical: false,
@@ -459,7 +502,7 @@ export default {
     }
 
     if (this.$route.query.textDirection == "vertical") {
-      this.vertical = true
+      this.vertical = true;
     }
 
     //areaが優先
@@ -467,12 +510,12 @@ export default {
       this.area = JSON.parse(this.$route.query.area);
     } else if (this.$route.query.feature) {
       let feature = this.$route.query.feature;
-      if(feature == "i"){
+      if (feature == "i") {
         this.area = [
           { w: 0, h: 0, c1: null, c2: null },
           { w: 50, h: 100, c1: "MainText", c2: null },
-          { w: 50, h: 100, c1: "IIIF", c2: null }
-        ]
+          { w: 50, h: 100, c1: "IIIF", c2: null },
+        ];
       }
     } else if (this.$route.query.config) {
       let config = this.$route.query.config;
@@ -481,12 +524,12 @@ export default {
         .get(config, {
           //responseType: "document"
         })
-        .then(response => {
+        .then((response) => {
           this.area = response.data;
         });
     }
 
-    this.hash = this.$route.hash
+    this.hash = this.$route.hash;
 
     if (this.$route.query.c) {
       this.dialog_component = this.$route.query.c;
@@ -500,7 +543,7 @@ export default {
       if (val.query.u != oldVal.query.u && val.query.u != null) {
         this.$router.go({
           path: this.$router.currentRoute.path,
-          force: true
+          force: true,
         });
       }
     },
@@ -514,11 +557,11 @@ export default {
       handler: function() {
         let param = {
           u: this.u,
-          area: JSON.stringify(this.area),
-          feature: this.$route.query.feature
+          //area: JSON.stringify(this.area),
+          feature: this.$route.query.feature,
         };
-        if(this.vertical){
-          param.textDirection = "vertical"
+        if (this.vertical) {
+          param.textDirection = "vertical";
         }
         if (this.config) {
           param.config = this.config;
@@ -529,39 +572,45 @@ export default {
           () => {}
         );
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   computed: {
     props: function() {
       return {
-        e: this.e
+        e: this.e,
       };
     },
     current: function() {
       return decodeURIComponent(window.location.href);
     },
     exportLink: function() {
-      const param = this.$route.query
-      param.area = this.area
+      const param = this.$route.query;
+      param.area = this.area;
 
-      let link = location.href.split("?")[0]+"?"
+      let link = location.href.split("?")[0] + "?";
 
-      for(let key in param){
-        let value = param[key]
-        if(Array.isArray(value)){
-          value = JSON.stringify(value)
+      for (let key in param) {
+        let value = param[key];
+        if (Array.isArray(value)) {
+          value = JSON.stringify(value);
         }
-        link += key+"="+value+"&"
+        link += key + "=" + value + "&";
       }
 
-      return link
+      return link;
     },
   },
   methods: {
-    scroll(){
-      this.$SmoothScroll(document.querySelector(this.hash).getBoundingClientRect()
-              .top - (64 + 7), 400, null, document.querySelector("#mainTextDiv"), 'y')
+    scroll() {
+      this.$SmoothScroll(
+        document.querySelector(this.hash).getBoundingClientRect().top -
+          (64 + 7),
+        400,
+        null,
+        document.querySelector("#mainTextDiv"),
+        "y"
+      );
     },
     export_myjson() {
       /*
@@ -687,18 +736,17 @@ export default {
         .get(u, {
           //responseType: "document"
         })
-        .then(response => {
+        .then((response) => {
           let xml_node = response.data;
           if (typeof xml_node == "string") {
             var dpObj = new DOMParser();
             xml_node = dpObj.parseFromString(xml_node, "text/xml");
           }
           //this.xml = xml_node;
-          return xml_node
+          return xml_node;
         });
 
-      this.xml = xmlNode
-      
+      this.xml = xmlNode;
     },
     messageLog(message) {
       this.e = message;
@@ -712,25 +760,25 @@ export default {
         return 0;
       }
     },
-    copyLink(){
-      const str = this.exportLink
+    copyLink() {
+      const str = this.exportLink;
 
-      const listener = function (e) {
-        e.clipboardData.setData('text/plain', str)
+      const listener = function(e) {
+        e.clipboardData.setData("text/plain", str);
         // 本来のイベントをキャンセル
-        e.preventDefault()
+        e.preventDefault();
         // 終わったら一応削除
-        document.removeEventListener('copy', listener)
-      }
+        document.removeEventListener("copy", listener);
+      };
 
       // コピーのイベントが発生したときに、クリップボードに書き込むようにしておく
-      document.addEventListener('copy', listener)
+      document.addEventListener("copy", listener);
 
       // コピー
-      document.execCommand('copy')
+      document.execCommand("copy");
       // alert('Copied.')
-    }
-  }
+    },
+  },
 };
 </script>
 
