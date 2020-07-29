@@ -9,8 +9,9 @@
         obj.name == 'head' || 
         obj.name == 'ab' || 
         obj.name == 'list' || 
-        obj.name == 'listPerson' || 
+        //obj.name == 'listPerson' || 
         obj.name == 'item' || 
+        obj.name == 'resp' || 
         obj.name == 'person'"
       >
         <span :class="'tei-'+obj.name" class="my-5" :key="key">
@@ -23,7 +24,7 @@
           ></MainText>
         </span>
       </template>
-      <template v-else-if="obj.name == 'date' || obj.name == 'time' || obj.name == 'note'">
+      <template v-else-if="obj.name == 'time' || obj.name == 'note'">
         <v-tooltip bottom :key="key">
           <template v-slot:activator="{ on }">
             <span v-on="on" :style="style(obj.name)">
@@ -34,7 +35,7 @@
         </v-tooltip>
       </template>
       <template v-else-if="obj.name == 'teiHeader'">
-        <v-sheet :key="key" class="pa-5 mb-5" color="grey lighten-3">
+        <v-sheet :key="key" class="pa-5 ma-5" color="grey lighten-3">
           <MainText
             v-on:parentMessage="messageLog"
             :key="key"
@@ -69,7 +70,8 @@
         obj.name == 'name' || 
         obj.name == 'rs' ||
         obj.name == 'speaker' || 
-        obj.name == 'bibl'
+        obj.name == 'bibl' ||
+        obj.name == 'date'
         "
       >
         <v-tooltip bottom :key="key">
@@ -108,7 +110,7 @@
           </span>
       </template>
 
-      <template v-else-if="obj.name != 'figure'">
+      <template v-else-if="obj.name != 'figure' && obj.name != 'listPerson'">
         <span :class="'tei-'+obj.name" :key="key" :id="obj.attributes ? obj.attributes['xml:id'] : null">
           <span
             v-if="obj.attributes && obj.attributes.facs && obj.attributes.facs.startsWith('#')"

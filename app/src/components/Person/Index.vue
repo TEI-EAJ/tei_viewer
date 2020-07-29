@@ -4,18 +4,27 @@
       <v-toolbar-title>人物情報</v-toolbar-title>
     </v-toolbar>
 
-    <v-card-title>{{obj.id}}</v-card-title>
+    <v-list-item three-line v-if="obj.id">
+      <v-list-item-content>
+        <v-list-item-title class="headline mb-1">{{obj.id}}</v-list-item-title>
+        <v-list-item-subtitle>{{obj.occupation}}</v-list-item-subtitle>
+      </v-list-item-content>
 
-    <v-card-subtitle>{{obj.occupation}}</v-card-subtitle>
+      <v-icon color="grey" size="80">mdi-account</v-icon>
+    </v-list-item>
 
     <v-card-text>
       <p v-if="obj.persName"><b>名前: </b>{{obj.persName}}</p>
-      <p v-if="obj.idno">
+      <p v-if="obj.idno && obj.idno.length > 0">
         <b>ID: </b>
         <template v-for="(value, index) in obj.idno">
           <a :key="index" :href="value" target="_blank">{{value}}</a>
           <span :key="'s_'+index" v-if="index != obj.idno.length - 1">, </span>
         </template>
+      </p>
+      <p v-if="obj.ref">
+        <b>Ref: </b>
+        <a :href="obj.ref" target="_blank">{{obj.ref}}</a>
       </p>
     </v-card-text>
 
@@ -73,6 +82,10 @@ export default {
           for(let j = 0; j < nodeList.length; j++){
             let node = nodeList[j]
             persNames.push(node.textContent)
+
+            if(node.attributes.ref){
+              obj.ref = node.attributes.ref.value
+            }
           }
           obj.persName = persNames.join(", ")
         }

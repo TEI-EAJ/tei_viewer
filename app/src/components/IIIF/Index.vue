@@ -71,7 +71,7 @@ export default {
       //選択語
       let obj = this.props.e;
 
-      if (obj != null && obj.attributes != null) {
+      if (obj && obj.attributes && obj.attributes.facs) {
         let zone_id = obj.attributes.facs.replace("#", "");
         let xml = this.xml;
         let zone = xml.querySelector('[*|id="' + zone_id + '"]');

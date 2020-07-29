@@ -25,7 +25,7 @@
 
       <v-tooltip bottom v-if="u">
         <template v-slot:activator="{ on }">
-          <v-btn icon target="_blank" @click="snackbar = true; copyLink();" v-on="on"> <!-- :href="exportLink" -->
+          <v-btn icon target="_blank" @click="snackbar = true; copyLink();" v-on="on">
             <v-icon>mdi-link</v-icon>
           </v-btn>
         </template>
@@ -47,18 +47,6 @@
           </v-btn>
         </template>
       </v-snackbar>
-        
-
-        <!-- 
-        <v-menu left bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on" @click="dialog_information = !dialog_information;">
-              <v-icon>mdi-information</v-icon>
-            </v-btn>
-          </template>
-        </v-menu>
-        -->
-
         
         <v-menu left bottom>
           <template v-slot:activator="{ on }">
@@ -95,29 +83,20 @@
         <v-btn icon href="./">
           <v-icon>mdi-home</v-icon>
         </v-btn>
+
+        
       </template>
     </v-app-bar>
 
     <div v-show="!start">
       <v-container class="my-5">
+        
         <h2 class="mb-5">TEI Multi Viewer</h2>
 
 
 
         <p>TEI/XMLファイルを選択してください。</p>
         <input type="file" id="files" @change="handleFileSelect" multiple />
-
-        <!-- 
-
-        <hr class="my-5" />
-
-        <p>TEI/XMLファイルのURLを入力してください。</p>
-
-
-
-        <hr class="my-5" />
-
-        -->
 
         <output id="list" class="mt-5"></output>
 
@@ -129,7 +108,7 @@
 
         <v-btn
           color="primary"
-          to="/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
+          href="/#/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
           class="mx-2 my-1"
         >可視化例を見る</v-btn>
         <v-btn
@@ -145,7 +124,7 @@
 
         <v-btn
           color="primary"
-          to="/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
+          href="/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
           class="mx-2 my-1"
         >可視化例を見る</v-btn>
         <v-btn
@@ -161,7 +140,7 @@
 
         <v-btn
           color="primary"
-          to="/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
+          href="/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
           class="mx-2 my-1"
         >可視化例を見る</v-btn>
         <v-btn
@@ -182,7 +161,7 @@
 
         <v-btn
           color="primary"
-          to="/?u=https://tei-eaj.github.io/koui/data/faith.xml"
+          href="/#/?u=https://tei-eaj.github.io/koui/data/faith.xml"
           class="mx-2 my-1"
         >可視化例を見る</v-btn>
         <v-btn
@@ -301,6 +280,7 @@ import MIMA from "../components/MIMA/Index.vue";
 
 import Person from "../components/Person/Index.vue";
 import Place from "../components/Place/Index.vue";
+import Date from "../components/Date/Index.vue";
 import Bibl from "../components/Bibl/Index.vue";
 
 import Name from "../components/Name/Index.vue";
@@ -327,6 +307,7 @@ export default {
     MIMA,
 
     Person,
+    Date,
     Place,
     Bibl,
 
@@ -388,6 +369,10 @@ export default {
       {
         value: "Place",
         text: "場所"
+      },
+      {
+        value: "Date",
+        text: "時間"
       },
       {
         value: "Bibl",
@@ -529,10 +514,12 @@ export default {
       handler: function() {
         let param = {
           u: this.u,
-          textDirection: this.vertical ? "vertical" : null,
           //area: JSON.stringify(this.area)
           feature: this.$route.query.feature
         };
+        if(this.vertical){
+          param.textDirection = "vertical"
+        }
         if (this.config) {
           param.config = this.config;
         }
@@ -555,7 +542,20 @@ export default {
       return decodeURIComponent(window.location.href);
     },
     exportLink: function() {
-      return window.location.href + "&area="+JSON.stringify(this.area)
+      const param = this.$route.query
+      param.area = this.area
+
+      let link = location.href.split("?")[0]+"?"
+
+      for(let key in param){
+        let value = param[key]
+        if(Array.isArray(value)){
+          value = JSON.stringify(value)
+        }
+        link += key+"="+value+"&"
+      }
+
+      return link
     },
   },
   methods: {
