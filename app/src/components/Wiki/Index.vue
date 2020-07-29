@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
 class SPARQLQueryDispatcher {
   constructor(endpoint) {
     this.endpoint = endpoint;
@@ -123,6 +123,38 @@ export default {
       if(url != ""){
         result.url = url
 
+        const endpointUrl = "https://dbpedia.org/sparql";
+        const sparqlQuery =
+          `#ネコ
+          select * where {
+            ?s ?v ?o . 
+            filter (?s = <`+url+`>)
+          }
+          `;
+
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        let description = await queryDispatcher.query(sparqlQuery).then(function(data) {
+          let results = data.results.bindings
+          for(let i = 0; i < results.length; i++){
+            let tmp = results[i]
+
+            let v = tmp.v.value
+            let o = tmp.o.value
+
+            if(v == "http://www.w3.org/2000/01/rdf-schema#comment"){
+              if(tmp.o["xml:lang"] == "ja"){
+                return o
+              }
+            }
+          }
+        });
+
+        result.description = {
+          value : description
+        }
+
+        /*
+
         let query  = `
           select * where {
             ?s ?v ?o . 
@@ -151,6 +183,8 @@ export default {
         result.description = {
           value : description
         }
+
+        */
       }
       
       this.obj = result
