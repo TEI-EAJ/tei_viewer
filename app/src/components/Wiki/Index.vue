@@ -125,9 +125,11 @@ export default {
       label = "Q3727885"
       let uri = "https://www.wikidata.org/wiki/Special:EntityData/"+label+".json"
       let result = await axios.get(uri).then(function(data) {
-        const descriptions = data.data.entities[label].descriptions
+        const obj = data.data.entities[label]
+        const descriptions = obj.descriptions
         //console.log({descriptions})
-        const labels = data.data.entities[label].labels
+        const labels = obj.labels
+        const sitelinks = obj.sitelinks
 
         const result = {}
 
@@ -140,6 +142,12 @@ export default {
           result.label = labels.ja.value
         } else {
           result.label = labels.en.value
+        }
+
+        if(sitelinks.jawiki){
+          result.wikipedia = sitelinks.jawiki.url
+        } else {
+          result.wikipedia = sitelinks.enwiki.url
         }
 
         return result
@@ -227,7 +235,7 @@ export default {
       //console.log({url})
 
       result.wikipepdia = url
-      result.wikidata = "aaa"
+      result.wikidata = "https://www.wikidata.org/wiki/"+label
       
       this.obj = result
     }
