@@ -126,7 +126,7 @@ export default {
       let uri = "https://www.wikidata.org/wiki/Special:EntityData/"+label+".json"
       let result = await axios.get(uri).then(function(data) {
         const descriptions = data.data.entities[label].descriptions
-        console.log({descriptions})
+        //console.log({descriptions})
         const labels = data.data.entities[label].labels
 
         const result = {}
@@ -146,7 +146,7 @@ export default {
       });
 
       if(url != ""){
-        console.log({url})
+        //console.log({url})
         //result.url = url
 
         const endpointUrl = "https://dbpedia.org/sparql";
@@ -160,7 +160,7 @@ export default {
 
         const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
         let description = await queryDispatcher.query(sparqlQuery).then(function(data) {
-          console.log({data})
+          //console.log({data})
           let results = data.results.bindings
           for(let i = 0; i < results.length; i++){
             let tmp = results[i]
@@ -174,15 +174,15 @@ export default {
               }
             }
           }
-        }).then(function(data){
-          console.log({data})
-        });
+        })/*.then(function(data){
+          //console.log({data})
+        })*/;
 
         if(description){
           result.description = description
         }
 
-        console.log({result})
+        //console.log({result})
 
         /*
         result.description = {
@@ -224,7 +224,7 @@ export default {
         */
       }
 
-      console.log({url})
+      //console.log({url})
 
       result.wikipepdia = url
       result.wikidata = "aaa"
