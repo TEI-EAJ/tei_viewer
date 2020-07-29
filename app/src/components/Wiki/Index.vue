@@ -94,6 +94,7 @@ export default {
         label = obj.elements[0].text;
       }
 
+      /*
       const endpointUrl = "https://query.wikidata.org/sparql";
       const sparqlQuery =
         `#ネコ
@@ -119,6 +120,35 @@ export default {
           return {}
         }
       });
+      */
+
+      const endpointUrl = "https://query.wikidata.org/sparql";
+      const sparqlQuery =
+        `#ネコ
+          select * where {
+            ?s ?v ?o . 
+            filter (?s = <`+url+`>)
+          }
+          `;
+
+      const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+      let result = await queryDispatcher.query(sparqlQuery).then(function(data) {
+        /*
+        let results = data.results.bindings;
+        if (results.length > 0) {
+          let result = results[0];
+          ///self.obj = result;
+          return result
+        } else {
+          //self.obj = {};
+          return {}
+        }
+        */
+        //console.log({data})
+        return data, label
+      });
+
+      //console.log({label})
 
       if(url != ""){
         result.url = url
