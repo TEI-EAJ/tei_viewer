@@ -4,6 +4,13 @@
     <v-toolbar class="headline grey lighten-2" flat>
       <v-toolbar-title>Wikidata</v-toolbar-title>
     </v-toolbar>
+    
+    <div class="ma-10 text-center" v-if="loading">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </div>
 
     <div>
       <v-img v-if="obj.image" :src="obj.image"></v-img>
@@ -17,7 +24,7 @@
             <li v-if="obj.wikidata">
               <a :href="obj.wikidata" target="_blank">Wikidata</a>
             </li>
-            <li><a :href="obj.wikipedia" target="_blank">Wikidpedia</a></li>
+            <li v-if="obj.wikipedia"><a :href="obj.wikipedia" target="_blank">Wikidpedia</a></li>
           </ul>
         </div>
       </v-card-text>
@@ -33,6 +40,7 @@ export default {
       results: [],
       obj: {},
       url: "",
+      loading: false
     };
   },
   props: ["xml", "props"],
@@ -50,7 +58,10 @@ export default {
   },
   methods: {
     init() {},
-    main: async function() {
+    main: function() {
+      // 初期化
+      this.obj = {}
+
       let label = null;
       let obj = this.props.e;
       let uri = "";
@@ -77,12 +88,16 @@ export default {
       }
 
       if (!label) {
+        this.loading = false
         return;
       }
 
       let jsonUrl =
         "https://www.wikidata.org/wiki/Special:EntityData/" + label + ".json";
-      let result = await axios.get(jsonUrl).then(function(data) {
+      const self = this
+
+      this.loading = true
+      axios.get(jsonUrl).then(function(data) {
         const obj = data.data.entities[label];
         const descriptions = obj.descriptions;
         const labels = obj.labels;
@@ -109,12 +124,12 @@ export default {
 
         result.wikidata = uri;
 
-        return result;
+        self.obj = result
+        self.loading = false
       }).catch(() => {
-        return {}
+        self.obj = {}
+        self.loading = false
       });
-
-      this.obj = result;
     },
   },
 };

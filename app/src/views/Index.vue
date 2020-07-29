@@ -36,7 +36,7 @@
               <v-icon>mdi-link</v-icon>
             </v-btn>
           </template>
-          <span>{{ "現在の表示レイアウトのリンクをコピー" }}</span>
+          <span>{{ "読み込みのURLをコピー" }}</span>
         </v-tooltip>
 
         <v-snackbar v-model="snackbar" :timeout="2000">
@@ -557,7 +557,7 @@ export default {
       handler: function() {
         let param = {
           u: this.u,
-          //area: JSON.stringify(this.area),
+          area: JSON.stringify(this.area),
           feature: this.$route.query.feature,
         };
         if (this.vertical) {
@@ -598,7 +598,7 @@ export default {
         link += key + "=" + value + "&";
       }
 
-      return link;
+      return link.slice(0, link.length - 1);
     },
   },
   methods: {
@@ -761,7 +761,7 @@ export default {
       }
     },
     copyLink() {
-      const str = this.exportLink;
+      const str = this.current;
 
       const listener = function(e) {
         e.clipboardData.setData("text/plain", str);
