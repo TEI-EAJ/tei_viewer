@@ -5,21 +5,21 @@
     </v-toolbar>
 
     <div v-if="obj && Object.keys(obj).length != 0">
-      <v-img v-if="obj.image" :src="obj.image.value"></v-img>
+      <v-img v-if="obj.image" :src="obj.image"></v-img>
 
-      <v-card-title v-if="obj.label">{{obj.label.value}}</v-card-title>
+      <v-card-title v-if="obj.label">{{obj.label}}</v-card-title>
 
       <v-card-text class="text--primary">
         <div>
-          {{obj.description ? obj.description.value : ""}}
+          {{obj.description ? obj.description : ""}}
           <ul class="mt-5">
-          <li v-if="obj.item"><a
-            :href="obj.item.value"
+          <li v-if="obj.wikidata"><a
+            :href="obj.wikidata"
             target="_blank"
           >ウィキデータ</a>
           </li>
            <li><a
-            :href="obj.url"
+            :href="obj.wikipedia"
             target="_blank"
           >ウィキペディア</a>
           </li>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-//import axios from "axios";
+import axios from "axios";
 class SPARQLQueryDispatcher {
   constructor(endpoint) {
     this.endpoint = endpoint;
@@ -39,9 +39,9 @@ class SPARQLQueryDispatcher {
 
   query(sparqlQuery) {
     const fullUrl = this.endpoint + "?query=" + encodeURIComponent(sparqlQuery);
-    const headers = { Accept: "application/sparql-results+json" };
+    //const headers = { Accept: "application/sparql-results+json" };
 
-    return fetch(fullUrl, { headers }).then(body => body.json());
+    return fetch(fullUrl/*, { headers }*/).then(body => body.json());
   }
 }
 
@@ -122,36 +122,32 @@ export default {
       });
       */
 
-      const endpointUrl = "https://query.wikidata.org/sparql";
-      const sparqlQuery =
-        `#ネコ
-          select * where {
-            ?s ?v ?o . 
-            filter (?s = <`+url+`>)
-          }
-          `;
+      label = "Q3727885"
+      let uri = "https://www.wikidata.org/wiki/Special:EntityData/"+label+".json"
+      let result = await axios.get(uri).then(function(data) {
+        const descriptions = data.data.entities[label].descriptions
+        console.log({descriptions})
+        const labels = data.data.entities[label].labels
 
-      const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-      let result = await queryDispatcher.query(sparqlQuery).then(function(data) {
-        /*
-        let results = data.results.bindings;
-        if (results.length > 0) {
-          let result = results[0];
-          ///self.obj = result;
-          return result
+        const result = {}
+
+        if(descriptions.ja){
+          result.description = descriptions.ja.value
         } else {
-          //self.obj = {};
-          return {}
+          result.description = descriptions.en.value
         }
-        */
-        //console.log({data})
-        return data, label
+        if(labels.ja){
+          result.label = labels.ja.value
+        } else {
+          result.label = labels.en.value
+        }
+
+        return result
       });
 
-      //console.log({label})
-
       if(url != ""){
-        result.url = url
+        console.log({url})
+        //result.url = url
 
         const endpointUrl = "https://dbpedia.org/sparql";
         const sparqlQuery =
@@ -164,6 +160,7 @@ export default {
 
         const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
         let description = await queryDispatcher.query(sparqlQuery).then(function(data) {
+          console.log({data})
           let results = data.results.bindings
           for(let i = 0; i < results.length; i++){
             let tmp = results[i]
@@ -177,11 +174,21 @@ export default {
               }
             }
           }
+        }).then(function(data){
+          console.log({data})
         });
 
+        if(description){
+          result.description = description
+        }
+
+        console.log({result})
+
+        /*
         result.description = {
           value : description
         }
+        */
 
         /*
 
@@ -216,6 +223,11 @@ export default {
 
         */
       }
+
+      console.log({url})
+
+      result.wikipepdia = url
+      result.wikidata = "aaa"
       
       this.obj = result
     }

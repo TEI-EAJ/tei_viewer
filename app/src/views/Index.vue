@@ -514,7 +514,7 @@ export default {
       handler: function() {
         let param = {
           u: this.u,
-          //area: JSON.stringify(this.area)
+          area: JSON.stringify(this.area),
           feature: this.$route.query.feature
         };
         if(this.vertical){
