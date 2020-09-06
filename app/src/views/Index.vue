@@ -106,7 +106,7 @@
 
         <v-btn
           color="primary"
-          href="/#/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
+          href="/app/#/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
@@ -124,7 +124,7 @@
 
         <v-btn
           color="primary"
-          href="/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
+          href="/app/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
@@ -142,7 +142,7 @@
 
         <v-btn
           color="primary"
-          href="/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
+          href="/app/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
@@ -163,7 +163,7 @@
 
         <v-btn
           color="primary"
-          href="/#/?u=https://tei-eaj.github.io/koui/data/faith.xml"
+          href="/app/#/?u=https://tei-eaj.github.io/koui/data/faith.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
@@ -196,7 +196,7 @@
               <template v-if="obj.c1 == 'MainText'">
                 <v-card
                   class="ma-2 pa-0"
-                  :class="vertical ? 'scroll vertical' : ''"
+                  :class="vertical ? 'scroll vertical' : 'scroll'"
                   :style="'width: ' + width + 'px;height:99%;'"
                   id="mainTextDiv"
                 >
@@ -301,12 +301,19 @@
             >閉じる</v-btn
           >
           <v-btn
+          class="mr-2"
             @click="
               conf();
               dialog_config = !dialog_config;
             "
             color="primary"
             >レイアウトを調整して閉じる</v-btn
+          >
+          <v-btn
+            @click="
+              vertical = !vertical;
+            "
+            >テキスト方向を入れ替える</v-btn
           >
         </v-card-text>
       </v-card>
