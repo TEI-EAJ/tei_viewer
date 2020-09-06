@@ -106,7 +106,7 @@
 
         <v-btn
           color="primary"
-          href="/app/#/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
+          href="https://tei-eaj.github.io/tei_viewer/app/#/?u=https://www.dhii.jp/nagasaki/dazai_all_20191012.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
@@ -124,7 +124,7 @@
 
         <v-btn
           color="primary"
-          href="/app/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
+          href="https://tei-eaj.github.io/tei_viewer/app/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/1126_tei.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
@@ -142,7 +142,7 @@
 
         <v-btn
           color="primary"
-          href="/app/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
+          href="https://tei-eaj.github.io/tei_viewer/app/#/?u=https://raw.githubusercontent.com/TEI-EAJ/aozora_tei/master/data/complete/tei_lib_lv3/86_tei.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
@@ -163,7 +163,7 @@
 
         <v-btn
           color="primary"
-          href="/app/#/?u=https://tei-eaj.github.io/koui/data/faith.xml"
+          href="https://tei-eaj.github.io/tei_viewer/app/#/?u=https://tei-eaj.github.io/koui/data/faith.xml"
           class="mx-2 my-1"
           >可視化例を見る</v-btn
         >
