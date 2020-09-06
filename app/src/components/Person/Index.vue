@@ -26,6 +26,10 @@
         <b>Ref: </b>
         <a :href="obj.ref" target="_blank">{{obj.ref}}</a>
       </p>
+      <p v-if="obj.note">
+        <b>Note: </b>
+        {{obj.note}}
+      </p>
     </v-card-text>
 
     <!-- <v-card-text style="background-color : yellow">{{e}}</v-card-text> -->
@@ -100,6 +104,9 @@ export default {
             idnos.push(node.textContent)
           }
           obj.idno = idnos
+        }
+        if (person.querySelector("note")) {
+          obj.note = person.querySelector("note").textContent;
         }
         map[obj.id] = obj;
       }

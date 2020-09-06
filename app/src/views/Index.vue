@@ -238,7 +238,7 @@
       </splitpanes>
     </div>
 
-    <v-dialog v-model="dialog_information" width="80%">
+    <v-dialog v-model="dialog_information" width="80%" style="z-index : 1000;">
       <v-card class="ma-2 pa-2" style="overflow:auto; height:100%;">
         <v-card-text class="text--primary">
           <h1 class="my-5">読み込み時のURL</h1>
@@ -267,11 +267,11 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialog" width="80%">
+    <v-dialog v-model="dialog" width="80%" style="z-index : 1000;">
       <component :is="dialog_component" :xml="xml" :props="props"></component>
     </v-dialog>
 
-    <v-dialog v-model="dialog_config" width="80%">
+    <v-dialog v-model="dialog_config" width="80%" style="z-index : 1000;">
       <v-card class="pa-2" style="overflow-y:auto; height:100%;">
         <v-card-text class="text--primary">
           <br />
