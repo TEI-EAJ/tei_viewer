@@ -310,10 +310,17 @@
             >レイアウトを調整して閉じる</v-btn
           >
           <v-btn
+          class="mr-2"
             @click="
               vertical = !vertical;
             "
             >テキスト方向を入れ替える</v-btn
+          >
+          <v-btn
+            @click="
+              setImageMode()
+            "
+            >画像閲覧モード</v-btn
           >
         </v-card-text>
       </v-card>
@@ -518,11 +525,7 @@ export default {
     } else if (this.$route.query.feature) {
       let feature = this.$route.query.feature;
       if (feature == "i") {
-        this.area = [
-          { w: 0, h: 0, c1: null, c2: null },
-          { w: 50, h: 100, c1: "MainText", c2: null },
-          { w: 50, h: 100, c1: "IIIF", c2: null },
-        ];
+        this.setImageMode()
       }
     } else if (this.$route.query.config) {
       let config = this.$route.query.config;
@@ -609,6 +612,13 @@ export default {
     },
   },
   methods: {
+    setImageMode(){
+      this.area = [
+        { w: 0, h: 0, c1: null, c2: null },
+        { w: 50, h: 100, c1: "MainText", c2: null },
+        { w: 50, h: 100, c1: "IIIF", c2: null },
+      ];
+    },
     scroll() {
       this.$SmoothScroll(
         document.querySelector(this.hash).getBoundingClientRect().top -
