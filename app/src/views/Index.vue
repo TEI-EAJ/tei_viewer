@@ -337,6 +337,7 @@ import MIMA from "../components/MIMA/Index.vue";
 
 import Person from "../components/Person/Index.vue";
 import Place from "../components/Place/Index.vue";
+import Nym from "../components/Nym/Index.vue";
 import Date from "../components/Date/Index.vue";
 import Bibl from "../components/Bibl/Index.vue";
 
@@ -365,6 +366,7 @@ export default {
 
     Person,
     Date,
+    Nym,
     Place,
     Bibl,
 
@@ -426,6 +428,10 @@ export default {
       {
         value: "Place",
         text: "場所",
+      },
+      {
+        value: "Nym",
+        text: "キーワード",
       },
       {
         value: "Date",

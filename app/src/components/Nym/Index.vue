@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-2" style="overflow:auto; height:100%;">
     <v-toolbar class="headline grey lighten-2" flat>
-      <v-toolbar-title>人物情報</v-toolbar-title>
+      <v-toolbar-title>キーワード</v-toolbar-title>
     </v-toolbar>
 
     <v-list-item three-line v-if="obj.id">
@@ -10,7 +10,7 @@
         <v-list-item-subtitle>{{obj.occupation}}</v-list-item-subtitle>
       </v-list-item-content>
 
-      <v-icon color="grey" size="80">mdi-account</v-icon>
+      <v-icon color="grey" size="40">mdi-key</v-icon>
     </v-list-item>
 
     <v-card-text>
@@ -21,6 +21,10 @@
           <a :key="index" :href="value" target="_blank">{{value}}</a>
           <span :key="'s_'+index" v-if="index != obj.idno.length - 1">, </span>
         </template>
+      </p>
+      <p v-if="obj.type">
+        <b>Type: </b>
+        {{obj.type}}
       </p>
       <p v-if="obj.ref">
         <b>Ref: </b>
@@ -65,12 +69,12 @@ export default {
         return;
       }
 
-      let listPerson = xml.querySelector("listPerson");
+      let listPerson = xml.querySelector("listNym");
       if (!listPerson) {
         return;
       }
 
-      let persons = listPerson.querySelectorAll("person");
+      let persons = listPerson.querySelectorAll("nym");
 
       let map = {};
 
@@ -80,33 +84,17 @@ export default {
         if(person.attributes["xml:id"]){
           obj.id = person.attributes["xml:id"].value
         }
-        if (person.querySelectorAll("persName")) {
-          let persNames = []
-          let nodeList = person.querySelectorAll("persName")
-          for(let j = 0; j < nodeList.length; j++){
-            let node = nodeList[j]
-            persNames.push(node.textContent)
 
-            if(node.attributes.ref){
-              obj.ref = node.attributes.ref.value.split(" ")[0]
-            }
-          }
-          obj.persName = persNames.join(", ")
+        if(person.attributes["sameAs"]){
+          obj.ref = person.attributes["sameAs"].value.split(" ")[0]
         }
-        if (person.querySelector("occupation")) {
-          obj.occupation = person.querySelector("occupation").textContent;
+
+        if(person.attributes["type"]){
+          obj.occupation = person.attributes["type"].value.split(" ")[0]
         }
-        if (person.querySelectorAll("idno")) {
-          let idnos = []
-          let nodeList = person.querySelectorAll("idno")
-          for(let j = 0; j < nodeList.length; j++){
-            let node = nodeList[j]
-            idnos.push(node.textContent)
-          }
-          obj.idno = idnos
-        }
-        if (person.querySelector("note")) {
-          obj.note = person.querySelector("note").textContent;
+
+        if (person.querySelector("ab")) {
+          obj.note = person.querySelector("ab").textContent;
         }
         map[obj.id] = obj;
       }
@@ -119,7 +107,7 @@ export default {
       let obj = this.props.e;
       if (obj && obj.attributes) {
         let id = null;
-        let attrs = ["corresp", "ref", "sameAs"];
+        let attrs = ["corresp", "ref", "sameAs", "nymRef"];
         for (let i = 0; i < attrs.length; i++) {
           let attr = attrs[i];
           if (obj.attributes[attr]) {
