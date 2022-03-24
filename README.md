@@ -1,5 +1,7 @@
 # TEI Multi Viewer
 
+[![github pages](https://github.com/TEI-EAJ/tei_viewer/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/TEI-EAJ/tei_viewer/actions/workflows/gh-pages.yml)
+
 TEI/XML ファイルをアップロード、または URL を指定することで、TEI/XML の内容を閲覧できます。
 
 ## Demo
