@@ -1,0 +1,12 @@
+{
+  "name": "TEI Multi Viewer",
+  "short_name": "TEI Viewer",
+  "description": "TEIの視覚化ビューアです。",
+  "icons": [],
+  "start_url": "/tei_viewer/?standalone=true",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "lang": "ja",
+  "orientation": "portrait"
+}
