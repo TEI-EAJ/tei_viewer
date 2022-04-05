@@ -3,7 +3,7 @@ const siteName = 'TEI Multi Viewer'
 const siteDesc = 'TEIの視覚化ビューアです。'
 const shortName = 'TEI Viewer'
 const siteKeywords = ['IIIF', 'TEI'].join(', ')
-const gtag = ''
+const gtag = 'G-62MR8MLSEH'
 const hostname = 'https://TEI-EAJ.github.io'
 const slug = 'tei_viewer'
 const baseUrl = hostname + '/' + slug
@@ -112,7 +112,18 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    '@nuxtjs/google-gtag',
+    '@nuxtjs/sitemap',
   ],
+
+  'google-gtag': {
+    id: gtag,
+  },
+
+  sitemap: {
+    path: '/sitemap.xml',
+    hostname,
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
