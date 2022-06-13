@@ -18,9 +18,15 @@ const routerBase =
       }
     : {}
 
+const env = {
+  BASE_URL: baseUrl
+}
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+
+  env,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
