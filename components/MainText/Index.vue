@@ -16,7 +16,7 @@
             obj.name == 'person'
         "
       >
-        <span :class="'tei-' + obj.name" class="my-5" :key="key">
+        <span :key="key" :class="'tei-' + obj.name" class="my-5">
           <!-- 今後要修正 -->
           <span
             v-if="
@@ -33,33 +33,33 @@
           </span>
           <!-- 今後要修正 おわり -->
           <MainText
-            v-on:parentMessage="messageLog"
-            :key="key"
             v-if="obj.elements"
+            :key="key"
             :elements="obj.elements"
             :parent="obj.name"
+            @parentMessage="messageLog"
           ></MainText>
         </span>
       </template>
       <template v-else-if="obj.name == 'teiHeader'">
         <v-sheet :key="key" class="pa-5 ma-5" color="grey lighten-3">
           <MainText
-            v-on:parentMessage="messageLog"
-            :key="key"
             v-if="obj.elements"
+            :key="key"
             :elements="obj.elements"
             :parent="obj.name"
+            @parentMessage="messageLog"
           ></MainText>
         </v-sheet>
       </template>
       <template v-else-if="obj.name == 'title'">
         <h2 :key="key" class="my-5">
           <MainText
-            v-on:parentMessage="messageLog"
-            :key="key"
             v-if="obj.elements"
+            :key="key"
             :elements="obj.elements"
             :parent="obj.name"
+            @parentMessage="messageLog"
           ></MainText>
         </h2>
       </template>
@@ -85,30 +85,30 @@
             obj.name == 'date'
         "
       >
-        <v-tooltip bottom :key="key">
-          <template v-slot:activator="{ on }">
+        <v-tooltip :key="key" bottom>
+          <template #activator="{ on }">
             <span
-              v-on="obj.attributes ? on : null"
-              :class="'tei-' + obj.name"
+              :id="obj.id"
               :key="key"
+              :class="'tei-' + obj.name"
               :style="
                 parent != 'person' && parent != 'respStmt'
                   ? style(obj.name)
                   : 'margin-right : 10px; margin-left : 10px;'
               "
+              v-on="obj.attributes ? on : null"
               @click="
                 parent != 'person' && parent != 'respStmt'
                   ? $emit('parentMessage', obj)
                   : ''
               "
-              :id="obj.id"
             >
               <MainText
-                v-on:parentMessage="messageLog"
-                :key="key"
                 v-if="obj.elements"
+                :key="key"
                 :elements="obj.elements"
                 :parent="obj.name"
+                @parentMessage="messageLog"
               ></MainText>
             </span>
           </template>
@@ -122,22 +122,22 @@
         "
       >
         <MainText
-          class="green--text"
-          v-on:parentMessage="messageLog"
-          :key="key"
           v-if="obj.elements"
+          :key="key"
+          class="green--text"
           :elements="obj.elements"
           :parent="obj.name"
+          @parentMessage="messageLog"
         ></MainText>
       </template>
 
       <template v-else-if="obj.name == 'time' || obj.name == 'note'">
-        <v-tooltip bottom :key="key">
-          <template v-slot:activator="{ on }">
-            <span v-on="on" :style="style(obj.name)">
+        <v-tooltip :key="key" bottom>
+          <template #activator="{ on }">
+            <span :style="style(obj.name)" v-on="on">
               <MainText
-                :key="key"
                 v-if="obj.elements"
+                :key="key"
                 :elements="obj.elements"
                 :parent="obj.name"
               ></MainText>
@@ -154,23 +154,23 @@
       >
         <small :key="key" class="warning--text">
           <MainText
-            v-on:parentMessage="messageLog"
-            :key="key"
             v-if="obj.elements"
+            :key="key"
             :elements="obj.elements"
             :parent="obj.name"
+            @parentMessage="messageLog"
           ></MainText>
         </small>
       </template>
 
       <template v-else-if="obj.name == 'add'">
         <MainText
-          class="primary--text"
-          v-on:parentMessage="messageLog"
-          :key="key"
           v-if="obj.elements"
+          :key="key"
+          class="primary--text"
           :elements="obj.elements"
           :parent="obj.name"
+          @parentMessage="messageLog"
         ></MainText>
       </template>
 
@@ -181,25 +181,25 @@
         "
       >
         <span
+          :key="key"
           :class="'tei-' + obj.attributes.rendition"
           :style="obj.attributes.style"
-          :key="key"
         >
           <MainText
-            v-on:parentMessage="messageLog"
-            :key="key"
             v-if="obj.elements"
+            :key="key"
             :elements="obj.elements"
             :parent="obj.name"
+            @parentMessage="messageLog"
           ></MainText>
         </span>
       </template>
 
       <template v-else-if="obj.name != 'figure' && obj.name != 'listPerson'">
         <span
-          :class="'tei-' + obj.name"
-          :key="key"
           :id="obj.attributes ? obj.attributes['xml:id'] : null"
+          :key="key"
+          :class="'tei-' + obj.name"
         >
           <span
             v-if="
@@ -213,13 +213,14 @@
               class="fas fa-camera primary--text ma-1"
               style="cursor: pointer"
             ></i>
+            <span v-if="obj.attributes.n" style="color: #9e9e9e">[{{ obj.attributes.n }}]</span>
           </span>
           <MainText
-            v-on:parentMessage="messageLog"
-            :key="key"
             v-if="obj.elements"
+            :key="key"
             :elements="obj.elements"
             :parent="obj.name"
+            @parentMessage="messageLog"
           ></MainText>
         </span>
       </template>
@@ -248,10 +249,10 @@ export default {
   */
   methods: {
     init() {
-      let elements = this.elements;
+      const elements = this.elements;
       if (elements != null) {
         for (let i = 0; i < elements.length; i++) {
-          let obj = elements[i];
+          const obj = elements[i];
           obj.id = uuid.v1();
         }
       }
@@ -260,11 +261,11 @@ export default {
       this.$emit("parentMessage", dat);
     },
     style(dat) {
-      let color = "0,0,255"; //blue
+      let color = "0,0,255"; // blue
       if (dat == "persName" || dat == "rs") {
-        color = "0,255,0"; //green
+        color = "0,255,0"; // green
       } else if (dat == "placeName") {
-        color = "255,0,0"; //red
+        color = "255,0,0"; // red
       } else if (dat == "date") {
         color = "255,165,0"; //
       } else if (dat == "bibl") {
