@@ -42,7 +42,7 @@
     "vue-uuid": "^2.1.0",
     "vue-wordcloud": "^1.1.1",
     "vue2-leaflet": "^2.7.1",
-    "vuetify": "^2.6.1",
+    "vuetify": "^2.6.10",
     "webpack": "^4.46.0",
     "xml-js": "^1.6.11"
   },
